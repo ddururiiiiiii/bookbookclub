@@ -22,4 +22,5 @@ public class Member {
         NickName = nickName;
         this.password = password;
     }
+
 }

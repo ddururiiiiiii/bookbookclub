@@ -58,7 +58,7 @@ class MemberRepositoryTest {
         String memberId = savedMember.getId();
 
         //when
-        Member updateParam = new Member("testid2", "닉네임2", "5678");
+        Member updateParam = new Member("testid1", "닉네임2", "5678");
         memberRepository.update(memberId, updateParam);
 
         Member findId = memberRepository.findById(memberId);
