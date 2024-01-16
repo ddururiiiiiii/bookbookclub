@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Members.MemberRepository;
@@ -28,11 +29,29 @@ public class BasicMemberController {
 
     private final MemberRepository memberRepository;
 
+    /**
+     * 회원 전체 목록 조회
+     * @param model
+     * @return
+     */
     @GetMapping
     public String members(Model model){
         List<Member> members = memberRepository.findAll();
         model.addAttribute("members", members);
         return "basic/members";
+    }
+
+    /**
+     * 회원 상세 조회
+     * @param memberId
+     * @param model
+     * @return
+     */
+    @GetMapping("/{memberId}")
+    public String member(@PathVariable String memberId, Model model) {
+        Member member = memberRepository.findById(memberId);
+        model.addAttribute("member", member);
+        return "basic/member";
     }
 
     /**

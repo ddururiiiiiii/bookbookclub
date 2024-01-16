@@ -30,7 +30,7 @@
             <tbody>
             <tr th:each="member : ${members}">
                 <td><a href="member.html" th:href="@{/basic/members/{memberId} (memberId=${member.id})}" th:text="${member.id}">회원id</a></td>
-                <td><a href="member.html" th:href="@{|/basic/members/${member.id}|}" th:text="${member.nickName}">닉네임</a></td>
+                <td><a th:text="${member.nickName}">닉네임</a></td>
             </tr>
             </tbody>
         </table>

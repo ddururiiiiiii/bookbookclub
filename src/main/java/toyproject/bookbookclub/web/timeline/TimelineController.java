@@ -26,6 +26,8 @@ public class TimelineController {
         return "timeline/allTimeline";
     }
 
+
+
     @PostConstruct
     public void init(){
         timeLineRepository.save(new Timeline("1", "bookId1", "bookImg1", "memberId1", "content1", "2024-01-15"));
