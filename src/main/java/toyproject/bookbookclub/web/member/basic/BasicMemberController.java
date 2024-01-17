@@ -4,10 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Members.MemberRepository;
 
@@ -56,8 +53,27 @@ public class BasicMemberController {
     }
 
     @GetMapping("/join")
-    public String join(){
+    public String joinForm(){
         return "basic/joinForm";
+    }
+
+    @PostMapping("/join")
+    public String join(@ModelAttribute Member member){
+        memberRepository.save(member);
+        return "basic/member";
+    }
+
+    @GetMapping("/{memberId}/edit")
+    public String editForm(@PathVariable String memberId, Model model){
+        Member member = memberRepository.findById(memberId);
+        model.addAttribute("member", member);
+        return "basic/editForm";
+    }
+
+    @PostMapping("/{memberId}/edit")
+    public String edit(@PathVariable String memberId, @ModelAttribute Member member){
+        memberRepository.update(memberId, member);
+        return "redirect:/basic/members/{memberId}";
     }
 
     /**
