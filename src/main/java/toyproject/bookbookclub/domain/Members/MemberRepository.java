@@ -34,6 +34,7 @@ public class MemberRepository {
         findMember.setNickName(updateParam.getNickName());
     }
 
+
     public void clearStore(){
         store.clear();
     }

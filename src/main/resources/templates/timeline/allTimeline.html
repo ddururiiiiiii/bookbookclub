@@ -20,26 +20,6 @@
     </div>
     <hr class="my-4">
     <div>
-        <table th:each="timeline : ${timelines}">
-            <tr>
-                <th>타임라인ID</th>
-                <td th:text="${timeline.timelimeId}">2</td>
-                <th>회원ID</th>
-                <td><a href="member.html" th:href="@{/basic/members/{memberId} (memberId=${timeline.memberId})}" th:text="${timeline.memberId}">회원id</a></td>
-            </tr>
-            <tr>
-                <th>책ID</th>
-                <td><a th:text="${timeline.bookId}">책아이디</a></td>
-                <th>책이미지</th>
-                <td><a th:text="${timeline.bookImg}">책이미지</a></td>
-            </tr>
-            <tr>
-                <td colspan="4"><a th:text="${timeline.content}">내용</a></td>
-            </tr>
-            <tr>
-                <td colspan="4"><a th:text="${timeline.lastUpdateDate}">2024-01-01</a></td>
-            </tr>
-        </table>
         <table class="table">
             <thead>
             <tr>
@@ -57,7 +37,7 @@
                 <td><a href="member.html" th:href="@{/basic/members/{memberId} (memberId=${timeline.memberId})}" th:text="${timeline.memberId}">회원id</a></td>
                 <td><a th:text="${timeline.bookId}">책아이디</a></td>
                 <td><a th:text="${timeline.bookImg}">책이미지</a></td>
-                <td><a th:text="${timeline.content}">내용</a></td>
+                <td><a href="timeline.html" th:href="@{/timeline/memberTimeline/{timelineId} (timelineId=${timeline.timelimeId})}" th:text="${timeline.content}">내용</a></td>
                 <td><a th:text="${timeline.lastUpdateDate}">2024-01-01</a></td>
             </tr>
             </tbody>
