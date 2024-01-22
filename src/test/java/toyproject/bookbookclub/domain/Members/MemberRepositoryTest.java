@@ -70,5 +70,12 @@ class MemberRepositoryTest {
 
 
     }
-
+    @Test
+    void MemberRepositoryTest(){
+        //given
+        
+        //when
+        
+        //then
+    }
 }

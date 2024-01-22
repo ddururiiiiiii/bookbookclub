@@ -14,33 +14,39 @@
     <div class="py-5 text-center">
         <h2>타임라인 상세</h2> </div>
     <div>
-        <label for="memberId">상품 ID</label>
+        <label for="timelineId">타임라임 ID</label>
+        <input type="text" id="timelineId" name="timelineId" class="form-control"
+               value="1" th:value="${timeline.timelineId}" readonly>
+    </div>
+    <div>
+        <label for="memberId">회원ID</label>
         <input type="text" id="memberId" name="memberId" class="form-control"
-               value="Testid1" th:value="${member.id}" readonly>
+               value="testid1" th:value="${timeline.memberId}" readonly>
     </div>
     <div>
-        <label for="memberNickname">닉네임</label>
-        <input type="text" id="memberNickname" name="memberNickname" class="form-control"
-               value="회원1" th:value="${member.nickName}" readonly>
+        <label for="bookId">책 ID</label>
+        <input type="text" id="bookId" name="bookId" class="form-control"
+               value="bookId1" th:value="${timeline.bookId}" readonly>
     </div>
     <div>
-        <label for="memberPassword">비밀번호</label>
-        <input type="text" id="memberPassword" name="memberPassword" class="form-control"
-               value="1111" th:value="${member.password}" readonly>
+        <label for="bookImg">책 이미지</label>
+        <input type="text" id="bookImg" name="bookImg" class="form-control"
+               value="bookImg1" th:value="${timeline.bookImg}" readonly>
     </div>
     <div>
     </div>
     <hr class="my-4">
     <div class="row">
         <div class="col">
-            <button class="w-100 btn btn-primary btn-lg"
-                    onclick="location.href='editMemberForm.html'"
-                    th:onclick="|location.href='@{/basic/members/{memberId}/edit(memberId=${member.id})}'|" type="button">회원 수정</button>
+<!--            <button class="w-100 btn btn-primary btn-lg"-->
+<!--                    onclick="location.href='editMemberForm.html'" -->
+<!--                    th:onclick="|location.href='@{/timeline/{timelineId}/edit(timelineId=${timelne.timelineId})}'|" -->
+<!--                    type="button">타임라인 수정</button>-->
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
                     onclick="location.href='members.html'"
-                    th:onclick="|location.href='@{/basic/members}'|" type="button">목록으로</button>
+                    th:onclick="|location.href='@{/timeline}'|" type="button">목록으로</button>
         </div>
     </div>
 </div> <!-- /container -->

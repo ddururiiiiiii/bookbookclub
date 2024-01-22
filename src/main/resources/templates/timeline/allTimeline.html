@@ -33,11 +33,11 @@
             </thead>
             <tbody>
             <tr th:each="timeline : ${timelines}">
-                <td><a th:text="${timeline.timelimeId}">타임라인아이디</a></td>
+                <td><a th:text="${timeline.timelineId}">타임라인아이디</a></td>
                 <td><a href="member.html" th:href="@{/basic/members/{memberId} (memberId=${timeline.memberId})}" th:text="${timeline.memberId}">회원id</a></td>
                 <td><a th:text="${timeline.bookId}">책아이디</a></td>
                 <td><a th:text="${timeline.bookImg}">책이미지</a></td>
-                <td><a href="timeline.html" th:href="@{/timeline/memberTimeline/{timelineId} (timelineId=${timeline.timelimeId})}" th:text="${timeline.content}">내용</a></td>
+                <td><a href="timeline.html" th:href="@{/timeline/{timelineId} (timelineId=${timeline.timelineId})}" th:text="${timeline.content}">내용</a></td>
                 <td><a th:text="${timeline.lastUpdateDate}">2024-01-01</a></td>
             </tr>
             </tbody>

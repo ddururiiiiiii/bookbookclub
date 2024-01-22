@@ -14,7 +14,7 @@ public class TimeLineRepository {
     private static final Map<String, Timeline> store = new ConcurrentHashMap<>(); //static 사용
 
     public Timeline save(Timeline timeline){
-        store.put(timeline.getTimelimeId(), timeline);
+        store.put(timeline.getTimelineId(), timeline);
         return timeline;
     }
 
