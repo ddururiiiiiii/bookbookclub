@@ -34,14 +34,24 @@
                value="bookImg1" th:value="${timeline.bookImg}" readonly>
     </div>
     <div>
+        <label for="content">내용</label>
+        <input type="text" id="content" name="content" class="form-control"
+               th:value="${timeline.content}" readonly>
+    </div>
+    <div>
+        <label for="lastUpdateDate">작성일</label>
+        <input type="text" id="lastUpdateDate" name="lastUpdateDate" class="form-control"
+               th:value="${timeline.lastUpdateDate}" readonly>
+    </div>
+    <div>
     </div>
     <hr class="my-4">
     <div class="row">
         <div class="col">
-<!--            <button class="w-100 btn btn-primary btn-lg"-->
-<!--                    onclick="location.href='editMemberForm.html'" -->
-<!--                    th:onclick="|location.href='@{/timeline/{timelineId}/edit(timelineId=${timelne.timelineId})}'|" -->
-<!--                    type="button">타임라인 수정</button>-->
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/timeline/{timelineId}/timelineEdit(timelineId=${timeline.timelineId})}'|"
+                    type="button">타임라인 수정</button>
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"

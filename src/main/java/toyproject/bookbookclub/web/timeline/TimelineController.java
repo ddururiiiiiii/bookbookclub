@@ -34,6 +34,13 @@ public class TimelineController {
         return "timeline/memberTimeline";
     }
 
+    @GetMapping("/{timelineId}/timelineEdit")
+    public String editForm(@PathVariable String timelineId, Model model){
+        Timeline timeline = timeLineRepository.findByTimelineId(timelineId);
+        model.addAttribute("timeline", timeline);
+        return "timeline/editForm";
+    }
+
     @PostConstruct
     public void init(){
         timeLineRepository.save(new Timeline("1", "bookId1", "bookImg1", "testid1", "content1", "2024-01-15"));

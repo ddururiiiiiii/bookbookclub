@@ -26,7 +26,7 @@ class TimeLineRepositoryTest {
 
         //then
         //option + enter : assert 단축
-        Timeline findTimeline = timeLineRepository.findByTimelineId(timeline.getTimelimeId());
+        Timeline findTimeline = timeLineRepository.findByTimelineId(timeline.getTimelineId());
         assertThat(findTimeline).isEqualTo(timeline);
 
     }
@@ -57,7 +57,7 @@ class TimeLineRepositoryTest {
         //저장
         Timeline savedTimeline = timeLineRepository.save(timeline);
         //저장된 데이터의 타임라인 아이디 가져옴
-        String timelineId = savedTimeline.getTimelimeId();
+        String timelineId = savedTimeline.getTimelineId();
 
         //when
         //업데이트 할 데이터 생성
