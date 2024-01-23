@@ -4,9 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Timeline.TimeLineRepository;
 import toyproject.bookbookclub.domain.Timeline.Timeline;
@@ -39,6 +37,12 @@ public class TimelineController {
         Timeline timeline = timeLineRepository.findByTimelineId(timelineId);
         model.addAttribute("timeline", timeline);
         return "timeline/editForm";
+    }
+
+    @PostMapping("/{timelineId}/timelineEdit")
+    public String edit(@PathVariable String timelineId, @ModelAttribute Timeline timeline){
+        timeLineRepository.update(timelineId, timeline);
+        return "redirect:/timeline/{timelineId}";
     }
 
     @PostConstruct

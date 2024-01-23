@@ -17,6 +17,7 @@ public class Member {
     public Member() {
     }
 
+
     public Member(String id, String nickName, String password) {
         this.id = id;
         NickName = nickName;
