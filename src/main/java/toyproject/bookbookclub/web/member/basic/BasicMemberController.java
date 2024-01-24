@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Members.MemberRepository;
 
@@ -58,10 +59,14 @@ public class BasicMemberController {
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute Member member){
-        memberRepository.save(member);
-        return "basic/member";
+    public String join(@ModelAttribute Member member, RedirectAttributes redirectAttributes){
+        Member savedMember = memberRepository.save(member);
+//        return "basic/member";
+        redirectAttributes.addAttribute("memberId", savedMember.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/members/{memberId}";
     }
+
 
     @GetMapping("/{memberId}/edit")
     public String editForm(@PathVariable String memberId, Model model){

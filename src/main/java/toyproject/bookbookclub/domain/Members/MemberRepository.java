@@ -14,6 +14,7 @@ public class MemberRepository {
 // 멀티쓰레드 환경에서는 hashMap 사용 하면 안됨. ConcurrentHashMap 써야 함.
 
     private static final Map<String, Member> store = new ConcurrentHashMap<>(); //static 사용
+//    private static final Map<String, Member> store = new HashMap<>(); //static 사용
 
     public Member save(Member member){
         store.put(member.getId(), member);

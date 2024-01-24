@@ -14,6 +14,9 @@
   <div class="py-5 text-center">
     <h2>회원 상세</h2> </div>
   <div>
+
+    <h2 th:if="${param.status}" th:text="'저장 완료!'"></h2>
+
     <label for="memberId">상품 ID</label>
     <input type="text" id="memberId" name="memberId" class="form-control"
            value="Testid1" th:value="${member.id}" readonly>
