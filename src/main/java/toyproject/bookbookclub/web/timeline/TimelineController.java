@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Timeline.TimeLineRepository;
 import toyproject.bookbookclub.domain.Timeline.Timeline;
 
+import java.sql.Time;
 import java.util.List;
 
 @Controller
@@ -30,6 +32,19 @@ public class TimelineController {
         Timeline timeline = timeLineRepository.findByTimelineId(timelineId);
         model.addAttribute("timeline", timeline);
         return "timeline/memberTimeline";
+    }
+
+    @GetMapping("/add")
+    public String addForm(){
+        return "timeline/addForm";
+    }
+
+    @PostMapping("/add")
+    public String add(@ModelAttribute Timeline timeline, RedirectAttributes redirectAttributes){
+        Timeline savedTimeline = timeLineRepository.save(timeline);
+        redirectAttributes.addAttribute("timelineId", savedTimeline.getTimelineId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/timeline/{timelineId}";
     }
 
     @GetMapping("/{timelineId}/timelineEdit")
