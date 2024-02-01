@@ -6,11 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Timeline.TimeLineRepository;
 import toyproject.bookbookclub.domain.Timeline.Timeline;
 
-import java.sql.Time;
 import java.util.List;
 
 @Controller
@@ -24,7 +22,7 @@ public class TimelineController {
     public String allTimeline(Model model){
         List<Timeline> timelines = timeLineRepository.findAll();
         model.addAttribute("timelines", timelines);
-        return "timeline/allTimeline";
+        return "/timeline/allTimeline";
     }
 
     @GetMapping("/{timelineId}")

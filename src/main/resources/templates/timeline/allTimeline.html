@@ -1,35 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}"
+      layout:fragment="content">
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Personal - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" th:href="@{/assets/favicon.ico}" />
-        <!-- Custom Google font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../../static/css/styles.css"
-              th:href="@{/css/styles.css}"
-              rel="stylesheet" />
-        <style>
-            a{
-                text-decoration: none;
-                color:black;
-            }
-            a:hover{
-                color: black;
-            }
-        </style>
+        <title>timeline</title>
     </head>
     <body class="d-flex flex-column h-100 bg-light">
-        <main class="flex-shrink-0">
+        <main class="flex-shrink-0" id="wrapper">
             <div class="px-5 my-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-11 col-xl-9 col-xxl-8" style="padding-left: 0px; padding-right: 0px;">
@@ -59,20 +37,21 @@
                                                 <!-- 내용 -->
                                                 <a href="timeline.html" th:href="@{/timeline/{timelineId} (timelineId=${timeline.timelineId})}" th:text="${timeline.content}">내용</a>
                                             </div>
+
+                                            <!-- 책제목 -->
+                                            <div class="text-primary  text-muted" style="margin-top: 10px; text-align: right">
+                                                <i>최진영의 구의 증명 (2023)를 읽고</i>
+                                                <span th:text="${timeline.bookId}" style="display: none;">책아이디</span>
+                                            </div>
                                             <!-- 좋아요 -->
-                                            <div class="text-primary  text-muted" style="margin-top: 10px; text-align: right; float: left;">
+                                            <div class="text-primary  text-muted" style="margin-top: 10px; text-align: right;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                                                     <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                                                 </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" style="color:red;">
-                                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                                                </svg>
+    <!--                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" style="color:red;">-->
+    <!--                                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
+    <!--                                                </svg>-->
                                                 <span class="small">0</span>
-                                            </div>
-                                            <!-- 책제목 -->
-                                            <div class="text-primary  text-muted" style="margin-top: 10px; text-align: right;">
-                                                <i>최진영의 구의 증명 (2023)를 읽고</i>
-                                                <span th:text="${timeline.bookId}" style="display: none;">책아이디</span>
                                             </div>
                                         </div>
                                     </div>
@@ -84,10 +63,5 @@
                 </div>
             </div>
         </main>
-
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../../../resources/js/scripts.js" th:href="@{/js/scripts.js}"></script>
     </body>
 </html>
