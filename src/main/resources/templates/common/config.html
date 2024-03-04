@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"  th:fragment="config">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+
+        <!-- CSS import -->
+        <link rel="stylesheet" th:href="@{/css/common.css}"/>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../../static/css/styles.css"  th:href="@{/css/styles.css}" rel="stylesheet" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+        <!-- Script import -->
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../../../resources/js/scripts.js" th:href="@{/js/scripts.js}"></script>
+
+        <!--기타 부트스트랩 템플릿 관련 import -->
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" th:href="@{/assets/favicon.ico}" />
+        <!-- Custom Google font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+        <style>
+            /*footer 하단 고정을 위해*/
+            #wrapper {
+                min-height: 100%;
+                position: relative;
+            }
+            /*a 태그 사용시 밑줄, 색변경 막기 위해*/
+            a{
+                text-decoration: none;
+                color:black;
+            }
+            /*a태그 hover 시 색변경 막기 위해*/
+            a:hover{
+                color: black;
+            }
+            /*하트 hover시 색변경*/
+            .bi-heart:hover{
+                color:red;
+
+            }
+            /*하트 hover시 색변경*/
+            .bi-heart:hover{
+                color:red;
+            }
+        </style>
+    </head>
+</html>
+

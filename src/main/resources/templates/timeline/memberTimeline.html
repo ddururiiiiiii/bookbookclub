@@ -41,7 +41,7 @@
     <div>
         <label for="lastUpdateDate">작성일</label>
         <input type="text" id="lastUpdateDate" name="lastUpdateDate" class="form-control"
-               th:value="${timeline.lastUpdateDate}" readonly>
+               th:value="${#temporals.format(timeline.lastUpdateDate, 'yyyy-MM-dd HH:mm')}" readonly>
     </div>
     <div>
     </div>

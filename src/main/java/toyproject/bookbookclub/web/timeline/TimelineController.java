@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import toyproject.bookbookclub.domain.Timeline.TimeLineRepository;
 import toyproject.bookbookclub.domain.Timeline.Timeline;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -60,7 +61,7 @@ public class TimelineController {
 
     @PostConstruct
     public void init(){
-        timeLineRepository.save(new Timeline("1", "bookId1", "bookImg1", "testid1", "content1", "2024-01-15"));
-        timeLineRepository.save(new Timeline("2", "bookId2", "bookImg2", "testid2", "content2", "2024-01-16"));
+        timeLineRepository.save(new Timeline("1", "bookId1", "bookImg1", "testid1", "content1", LocalDateTime.now()));
+        timeLineRepository.save(new Timeline("2", "bookId2", "bookImg2", "testid2", "content2", LocalDateTime.now()));
     }
 }

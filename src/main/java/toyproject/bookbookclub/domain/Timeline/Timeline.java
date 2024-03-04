@@ -3,6 +3,8 @@ package toyproject.bookbookclub.domain.Timeline;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter @Setter
 public class Timeline {
 
@@ -11,14 +13,9 @@ public class Timeline {
     private String bookImg;
     private String memberId;
     private String content;
-    private String lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
 
-    public Timeline() {
-    }
-
-
-    //save
-    public Timeline(String timelineId, String bookId, String bookImg, String memberId, String content, String lastUpdateDate) {
+    public Timeline(String timelineId, String bookId, String bookImg, String memberId, String content, LocalDateTime lastUpdateDate) {
         this.timelineId = timelineId;
         this.bookId = bookId;
         this.bookImg = bookImg;
@@ -26,5 +23,4 @@ public class Timeline {
         this.content = content;
         this.lastUpdateDate = lastUpdateDate;
     }
-
 }
