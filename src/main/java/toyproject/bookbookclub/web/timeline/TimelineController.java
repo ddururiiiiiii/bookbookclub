@@ -34,7 +34,8 @@ public class TimelineController {
     }
 
     @GetMapping("/add")
-    public String addForm(){
+    public String addForm(Model model){
+        model.addAttribute("timeline", new Timeline());
         return "timeline/addForm";
     }
 

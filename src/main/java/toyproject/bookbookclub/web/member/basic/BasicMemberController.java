@@ -54,7 +54,8 @@ public class BasicMemberController {
     }
 
     @GetMapping("/join")
-    public String joinForm(){
+    public String joinForm(Model model){
+        model.addAttribute("member", new Member());
         return "basic/joinForm";
     }
 

@@ -15,18 +15,18 @@
     <div class="py-5 text-center"> <h2>회원 가입</h2>
     </div>
     <h4 class="mb-3">회원 가입</h4>
-    <form action="member.html" th:action method="post">
+    <form action="member.html" th:action th:object="${member}" method="post">
         <div>
             <label for="id">회원 아이디</label>
-            <input type="text" id="id" name="id" class="form-control" placeholder="회원 아이디를 입력하세요">
+            <input type="text" id="id" th:field="*{id}" class="form-control" placeholder="회원 아이디를 입력하세요">
         </div>
         <div>
             <label for="nickName">닉네임</label>
-            <input type="text" id="nickName" name="nickName" class="form-control" placeholder="닉네임을 입력하세요">
+            <input type="text" id="nickName" th:field="*{nickName}" class="form-control" placeholder="닉네임을 입력하세요">
         </div>
         <div>
         <label for="password">비밀번호</label>
-            <input type="text" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요">
+            <input type="text" id="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력하세요">
         </div>
         <hr class="my-4">
         <div class="row">

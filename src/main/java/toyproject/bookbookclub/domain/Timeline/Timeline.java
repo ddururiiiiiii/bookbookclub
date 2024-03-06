@@ -15,6 +15,9 @@ public class Timeline {
     private String content;
     private LocalDateTime lastUpdateDate;
 
+    public Timeline() {
+    }
+
     public Timeline(String timelineId, String bookId, String bookImg, String memberId, String content, LocalDateTime lastUpdateDate) {
         this.timelineId = timelineId;
         this.bookId = bookId;
