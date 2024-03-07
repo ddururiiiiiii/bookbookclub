@@ -12,40 +12,41 @@
 </head>
 <body>
 <div class="container">
-    <div class="py-5 text-center"> <h2>타임라인 등록</h2>
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.addTimeline}">타임라인 등록</h2>
     </div>
-    <h4 class="mb-3">타임라인 등록</h4>
+    <h4 class="mb-3" th:text="#{page.addTimeline}">타임라인 등록</h4>
     <form action="timeline.html" th:action th:object="${timeline}" method="post">
         <div>
-            <label for="timelineId">타임라인 ID</label>
+            <label for="timelineId" th:text="#{label.timeline.timelineId}">타임라인 ID</label>
             <input type="text" id="timelineId" th:field="*{timelineId}" class="form-control" placeholder="타임라인 아이디를 입력하세요">
         </div>
         <div>
-            <label for="memberId">회원 ID</label>
+            <label for="memberId" th:text="#{label.member.id}">회원 ID</label>
             <input type="text" id="memberId" th:field="*{memberId}" class="form-control" placeholder="회원아이디 입력하세요">
         </div>
         <div>
-            <label for="bookId">책ID</label>
+            <label for="bookId" th:text="#{label.timeline.bookId}">책ID</label>
             <input type="text" id="bookId" th:field="*{bookId}" class="form-control" placeholder="책아이디를 입력하세요">
         </div>
         <div>
-            <label for="bookImg">책이미지</label>
+            <label for="bookImg" th:text="#{label.timeline.bookImg}">책이미지</label>
             <input type="text" id="bookImg" th:field="*{bookImg}" class="form-control" placeholder="이미지를 입력하세요">
         </div>
         <div>
-            <label for="content">내용</label>
+            <label for="content" th:text="#{label.timeline.content}">내용</label>
             <input type="text" id="content" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요">
         </div>
 
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">타임라인 등록</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.timeline.save}">타임라인 등록</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='allTimeline.html'"
-                        th:onclick="|location.href='@{/timeline/allTimeline}'|" type="button">취소</button>
+                        th:onclick="|location.href='@{/timeline/allTimeline}'|" type="button" th:text="#{button.cancel}">취소</button>
             </div>
         </div>
     </form>
