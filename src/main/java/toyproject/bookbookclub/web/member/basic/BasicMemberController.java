@@ -4,10 +4,14 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import toyproject.bookbookclub.domain.Members.Member;
 import toyproject.bookbookclub.domain.Members.MemberRepository;
+import toyproject.bookbookclub.web.validation.MemberValidator;
 
 import java.util.List;
 
@@ -26,8 +30,13 @@ public class BasicMemberController {
      * @PostConstruct
      */
 
+    private final MemberValidator memberValidator;
     private final MemberRepository memberRepository;
 
+    @InitBinder
+    public void init(WebDataBinder dataBinder){
+        dataBinder.addValidators(memberValidator);
+    }
     /**
      * 회원 전체 목록 조회
      * @param model
@@ -60,7 +69,14 @@ public class BasicMemberController {
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute Member member, RedirectAttributes redirectAttributes){
+    public String join(@Validated @ModelAttribute Member member
+    , BindingResult bindingResult
+    , RedirectAttributes redirectAttributes ){
+
+        if (bindingResult.hasErrors()){
+            return "basic/joinForm";
+        }
+
         Member savedMember = memberRepository.save(member);
 //        return "basic/member";
         redirectAttributes.addAttribute("memberId", savedMember.getId());
