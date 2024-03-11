@@ -17,9 +17,10 @@
 </head>
 <body>
 <div class="container">
-    <div class="py-5 text-center" th:text="#{page.joinMember}"> <h2>회원 가입</h2>
+    <div class="mb-3 text-center" >
+        <h4 class="mb-3" th:text="#{page.joinMember}">회원 가입</h4>
     </div>
-    <h4 class="mb-3">회원 가입</h4>
+
     <form action="member.html" th:action th:object="${member}" method="post">
         <div>
             <label for="id" th:text="#{label.member.id}">회원 아이디</label>
@@ -42,11 +43,12 @@
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.save}">회원 가입</button> </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.save}">회원 가입</button>
+            </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='members.html'"
-                        th:onclick="|location.href='@{/basic/members}'|" type="button"
+                        th:onclick="|location.href='@{/login}'|" type="button"
                 th:text="#{button.cancel}">취소</button>
             </div>
         </div>

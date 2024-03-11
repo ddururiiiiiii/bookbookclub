@@ -1,11 +1,9 @@
 package toyproject.bookbookclub.domain.Members;
 
+import org.apache.el.stream.Stream;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -25,6 +23,12 @@ public class MemberRepository {
         return store.get(id);
     }
 
+    public Optional<Member> findByLoginId(String loginId) {
+        return findAll().stream()
+                .filter(m -> m.getId().equals(loginId))
+                .findFirst();
+    }
+
     public List<Member> findAll(){
         return new ArrayList<>(store.values());
     }
@@ -36,8 +40,10 @@ public class MemberRepository {
     }
 
 
+
     public void clearStore(){
         store.clear();
     }
+
 
 }
