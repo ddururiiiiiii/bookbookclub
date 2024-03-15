@@ -19,7 +19,7 @@ import toyproject.bookbookclub.web.SessionConst;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class loginController {
+public class LoginController {
 
     private final LoginService loginService;
 

@@ -30,6 +30,12 @@
            value="1111" th:value="${member.password}" readonly>
   </div>
   <div>
+    <label>프로필 이미지</label>
+    <a th:if="${member.profileImage}"
+       th:href="|/attach/${member.id}|" th:text="${member.getProfileImage().getUploadFileName()}" /><br/>
+    <img th:src="|/basic/members/images/${member.getProfileImage().getStoreFileName()}|" width="300" height="300"/>
+  </div>
+  <div>
 </div>
   <hr class="my-4">
   <div class="row">

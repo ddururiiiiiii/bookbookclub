@@ -21,7 +21,7 @@
         <h4 class="mb-3" th:text="#{page.joinMember}">회원 가입</h4>
     </div>
 
-    <form action="member.html" th:action th:object="${member}" method="post">
+    <form action="member.html" th:action th:object="${member}" method="post" enctype="multipart/form-data">
         <div>
             <label for="id" th:text="#{label.member.id}">회원 아이디</label>
             <input type="text" id="id" th:field="*{id}" th:errorclass="field-error"
@@ -39,6 +39,10 @@
             <input type="text" id="password" th:field="*{password}" th:errorclass="field-error"
                    class="form-control" placeholder="비밀번호를 입력하세요">
             <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
+        </div>
+        <div>
+            <label for="profileImage" th:text="#{label.member.profileImage}">프로필 이미지</label>
+            <input type="file" id="profileImage" th:field="*{profileImage}" class="form-control">
         </div>
         <hr class="my-4">
         <div class="row">
