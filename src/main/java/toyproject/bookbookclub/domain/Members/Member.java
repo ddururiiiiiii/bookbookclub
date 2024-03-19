@@ -4,12 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import toyproject.bookbookclub.domain.UploadFile;
 
+import java.time.LocalDateTime;
+
 @Getter @Setter
 public class Member {
 
     private String id;
     private String NickName;
     private String password;
+    private LocalDateTime firstJoinDate;
+    private LocalDateTime lastUpdateDate;
+    private String Bios;
     private UploadFile profileImage;
 
     public Member() {

@@ -1,4 +1,4 @@
-package toyproject.bookbookclub.domain.login;
+package toyproject.bookbookclub.domain.Login;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

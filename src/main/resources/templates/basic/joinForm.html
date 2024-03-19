@@ -4,50 +4,101 @@
     <meta charset="utf-8">
     <link href="../css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
     <style>
         .container {
             max-width: 560px;
         }
-        .field-error {
+        .is-invalid {
             border-color: #dc3545;
             color: #dc3545;
         }
+        .form-floating{
+            margin-top: 20px;
+        }
+        div.is-invalid{
+            font-size: 0.87em;
+        }
+        #imagePreview {
+            width: 150px;
+            height: 150px;
+            border-radius: 70%;
+            overflow: hidden;
+        }
+        .row{
+            margin-top: 20px;
+        }
     </style>
-
 </head>
 <body>
+<script th:src="@{/js/basic/joinForm.js}"></script>
 <div class="container">
     <div class="mb-3 text-center" >
         <h4 class="mb-3" th:text="#{page.joinMember}">회원 가입</h4>
     </div>
 
-    <form action="member.html" th:action th:object="${member}" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="id" th:text="#{label.member.id}">회원 아이디</label>
-            <input type="text" id="id" th:field="*{id}" th:errorclass="field-error"
+    <form id="joinForm" action="member.html" th:action th:object="${member}"
+          method="post" enctype="multipart/form-data">
+
+        <div style="text-align: center;">
+            <svg id="imagePreviewEmpty" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: lightgrey;">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+
+        </div>
+
+        <div style="text-align: center;">
+            <img id="imagePreview" src="#" alt="미리보기" style="display:none; max-width: 100%;">
+        </div>
+
+        <label for="profileImage" th:text="#{label.member.profileImage}">프로필 이미지</label>
+        <input type="file" id="profileImage" th:field="*{profileImage}" class="form-control" accept="image/*">
+
+        <div class="form-floating input-group mb-3">
+            <input type="text" id="id" th:field="*{id}" th:errorclass="is-invalid"
                    class="form-control" placeholder="회원 아이디를 입력하세요">
-            <div class="field-error" th:errors="*{id}">회원ID 오류</div>
+            <label for="id" th:text="#{label.member.id}">회원 아이디</label>
+            <button type="button" class="btn btn-outline-secondary">중복검사</button>
         </div>
-        <div>
-            <label for="nickName" th:text="#{label.member.NickName}">닉네임</label>
-            <input type="text" id="nickName" th:field="*{nickName}" th:errorclass="field-error"
+        <div class="is-invalid" th:errors="*{id}">회원ID 오류</div>
+        <div class="is-invalid" id="idError" style="display: none;">회원ID 오류</div>
+
+        <div class="form-floating">
+            <input type="text" id="nickName" th:field="*{nickName}" th:errorclass="is-invalid"
                    class="form-control" placeholder="닉네임을 입력하세요">
-            <div class="field-error" th:errors="*{nickName}">별명 오류</div>
+            <label for="nickName" th:text="#{label.member.NickName}">닉네임</label>
+            <div class="is-invalid" th:errors="*{nickName}">별명 오류</div>
+            <div class="is-invalid" id="nickNameError" style="display: none;">별명 오류</div>
         </div>
-        <div>
-        <label for="password" th:text="#{label.member.password}">비밀번호</label>
-            <input type="text" id="password" th:field="*{password}" th:errorclass="field-error"
+
+        <div class="form-floating">
+            <input type="password" id="password" th:field="*{password}" th:errorclass="is-invalid"
                    class="form-control" placeholder="비밀번호를 입력하세요">
-            <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
+            <label for="password" th:text="#{label.member.password}">비밀번호</label>
         </div>
-        <div>
-            <label for="profileImage" th:text="#{label.member.profileImage}">프로필 이미지</label>
-            <input type="file" id="profileImage" th:field="*{profileImage}" class="form-control">
+        <div class="is-invalid" th:errors="*{password}">비밀번호 오류</div>
+        <div class="is-invalid" id="passwordError" style="display: none;">비밀번호 오류</div>
+
+        <div class="form-floating">
+            <input type="password" id="checkPassword" name="checkPassword"
+                   class="form-control" placeholder="비밀번호를 다시 입력하세요">
+            <label for="checkPassword" >비밀번호 확인</label>
+            <div class="valid-feedback" id="checkPasswordSuccess" style="display: none;">비밀번호 일치</div>
+            <div class="is-invalid" id="checkPasswordError" style="display: none;">비밀번호 미일치</div>
         </div>
-        <hr class="my-4">
+
+        <div class="form-floating">
+            <textarea class="form-control" id="bios" th:field="*{bios}" th:errorclass="is-invalid"
+                      placeholder="소개글을 입력해주세요." style="height: 100px"></textarea>
+            <label for="bios">소개글</label>
+            <div id="biosCounter" style="font-size: 0.87em; color: gray; text-align: right;">0/120</div>
+            <div class="is-invalid" id="biosError" style="display: none;">자기소개 글자수 제한</div>
+        </div>
+
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.save}">회원 가입</button>
+                <button class="w-100 btn btn-primary btn-lg" type="button" id="saveBtn" th:text="#{button.member.save}">회원 가입</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"

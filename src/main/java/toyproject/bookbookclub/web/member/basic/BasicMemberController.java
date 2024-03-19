@@ -2,6 +2,7 @@ package toyproject.bookbookclub.web.member.basic;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -11,18 +12,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 import toyproject.bookbookclub.domain.FileStore;
 import toyproject.bookbookclub.domain.Members.Member;
-import toyproject.bookbookclub.domain.Members.MemberJoinForm;
+import toyproject.bookbookclub.domain.Members.JoinForm;
 import toyproject.bookbookclub.domain.Members.MemberRepository;
+import toyproject.bookbookclub.domain.Members.UpdateForm;
 import toyproject.bookbookclub.domain.UploadFile;
 import toyproject.bookbookclub.web.validation.MemberValidator;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -77,7 +81,7 @@ public class BasicMemberController {
     }
 
     /**
-     * 회원 가입
+     * 회원가입
      * @param form
      * @param bindingResult
      * @param redirectAttributes
@@ -85,7 +89,7 @@ public class BasicMemberController {
      * @throws IOException
      */
     @PostMapping("/join")
-    public String join(@Validated @ModelAttribute("member") MemberJoinForm form
+    public String join(@Validated @ModelAttribute("member") JoinForm form
     , BindingResult bindingResult
     , RedirectAttributes redirectAttributes) throws IOException {
 
@@ -98,10 +102,10 @@ public class BasicMemberController {
         member.setId(form.getId());
         member.setPassword(form.getPassword());
         member.setNickName(form.getNickName());
+        member.setBios(form.getBios());
         member.setProfileImage(profileImage);
 
         Member savedMember = memberRepository.save(member);
-//        return "basic/member";
         redirectAttributes.addAttribute("memberId", savedMember.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/basic/members/{memberId}";
@@ -123,12 +127,21 @@ public class BasicMemberController {
     /**
      * 회원 정보 수정
      * @param memberId
-     * @param member
+     * @param form
      * @return
      */
     @PostMapping("/{memberId}/edit")
-    public String edit(@PathVariable String memberId, @ModelAttribute Member member){
-        memberRepository.update(memberId, member);
+    public String edit(@PathVariable String memberId
+            , @ModelAttribute("member") UpdateForm form
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()){
+            return "basic/editForm";
+        }
+
+        UploadFile profileImage = fileStore.storeFile(form.getProfileImage());
+        memberRepository.update(memberId, form, profileImage);
         return "redirect:/basic/members/{memberId}";
     }
 

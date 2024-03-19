@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import toyproject.bookbookclub.domain.Members.Member;
-import toyproject.bookbookclub.domain.login.LoginForm;
-import toyproject.bookbookclub.domain.login.LoginService;
+import toyproject.bookbookclub.domain.Login.LoginForm;
+import toyproject.bookbookclub.domain.Login.LoginService;
 import toyproject.bookbookclub.web.SessionConst;
 
 @Slf4j

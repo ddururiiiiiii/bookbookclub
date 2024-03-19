@@ -1,4 +1,4 @@
-package toyproject.bookbookclub.domain.login;
+package toyproject.bookbookclub.domain.Login;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

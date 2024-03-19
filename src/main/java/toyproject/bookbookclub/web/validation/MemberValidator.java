@@ -5,7 +5,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import toyproject.bookbookclub.domain.Members.Member;
-import toyproject.bookbookclub.domain.Members.MemberJoinForm;
+import toyproject.bookbookclub.domain.Members.JoinForm;
+import toyproject.bookbookclub.domain.Members.UpdateForm;
 
 @Component
 public class MemberValidator implements Validator {
@@ -17,8 +18,11 @@ public class MemberValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        MemberJoinForm member = (MemberJoinForm) target;
-
+        if (target instanceof UpdateForm) {
+            UpdateForm member = (UpdateForm) target;
+        } else if (target instanceof JoinForm) {
+            JoinForm member = (JoinForm) target;
+        }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nickName", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required");

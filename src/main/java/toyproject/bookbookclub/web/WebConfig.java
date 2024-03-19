@@ -15,13 +15,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/js/**");
 
        registry.addInterceptor(new LoginCheckInterceptor())
                .order(2)
                .addPathPatterns("/**")
                .excludePathPatterns(
                        "/", "/basic/members/join", "/login", "/logout",
-                       "/css/**", "/*.ico", "/error", "/error-page/**");
+                       "/css/**", "/*.ico", "/error", "/error-page/**", "/js/**");
     }
 }

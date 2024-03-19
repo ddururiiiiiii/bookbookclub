@@ -2,19 +2,20 @@ package toyproject.bookbookclub.domain.Members;
 
 import org.apache.el.stream.Stream;
 import org.springframework.stereotype.Repository;
+import toyproject.bookbookclub.domain.UploadFile;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class MemberRepository {
-// @Repository 란?
-// 멀티쓰레드 환경에서는 hashMap 사용 하면 안됨. ConcurrentHashMap 써야 함.
 
-    private static final Map<String, Member> store = new ConcurrentHashMap<>(); //static 사용
-//    private static final Map<String, Member> store = new HashMap<>(); //static 사용
+    private static final Map<String, Member> store = new ConcurrentHashMap<>();
+
 
     public Member save(Member member){
+        member.setFirstJoinDate(LocalDateTime.now());
         store.put(member.getId(), member);
         return member;
     }
@@ -33,10 +34,13 @@ public class MemberRepository {
         return new ArrayList<>(store.values());
     }
 
-    public void update(String memberId, Member updateParam){
+    public void update(String memberId, UpdateForm updateParam, UploadFile uploadFile){
         Member findMember = findById(memberId);
         findMember.setPassword(updateParam.getPassword());
         findMember.setNickName(updateParam.getNickName());
+        findMember.setBios(updateParam.getBios());
+        findMember.setProfileImage(uploadFile);
+        findMember.setLastUpdateDate(LocalDateTime.now());
     }
 
 

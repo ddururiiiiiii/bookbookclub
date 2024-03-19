@@ -12,12 +12,12 @@
 <body>
 <div class="container">
   <div class="py-5 text-center">
-    <h2>회원 상세</h2> </div>
+    <h2>회원 정보</h2> </div>
   <div>
 
     <h2 th:if="${param.status}" th:text="'저장 완료!'"></h2>
 
-    <label for="memberId">상품 ID</label>
+    <label for="memberId">회원 ID</label>
     <input type="text" id="memberId" name="memberId" class="form-control"
            value="Testid1" th:value="${member.id}" readonly>
   </div> <div>
@@ -31,9 +31,11 @@
   </div>
   <div>
     <label>프로필 이미지</label>
-    <a th:if="${member.profileImage}"
-       th:href="|/attach/${member.id}|" th:text="${member.getProfileImage().getUploadFileName()}" /><br/>
-    <img th:src="|/basic/members/images/${member.getProfileImage().getStoreFileName()}|" width="300" height="300"/>
+    <div th:if="${member.profileImage}">
+       <a th:href="|/attach/${member.id}|" th:text="${member.getProfileImage().getUploadFileName()}" /><br/>
+      <img th:src="|/basic/members/images/${member.getProfileImage().getStoreFileName()}|" width="300" height="300"/>
+    </div>
+  </div>
   </div>
   <div>
 </div>
@@ -50,6 +52,7 @@
               th:onclick="|location.href='@{/basic/members}'|" type="button">목록으로</button>
     </div>
   </div>
+
 </div> <!-- /container -->
 </body>
 </html>
