@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <script th:src="@{/js/login/loginForm.js}"></script>
     <style>
         .container {
             max-width: 560px;
@@ -11,41 +12,65 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+        .is-invalid {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .form-floating{
+            margin-top: 20px;
+        }
+        div.is-invalid{
+            font-size: 0.87em;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="py-5 text-center"> <h2>로그인</h2>
+    <div class="py-5 text-center">
+        <h2>로그인</h2>
     </div>
-    <form action="item.html" th:action th:object="${loginForm}" method="post">
+
+    <form action="item.html" id="loginForm" th:action th:object="${loginForm}" method="post">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}"
                th:text="${err}">전체 오류 메시지</p>
+            <p>
         </div>
-        <div>
-            <label for="loginId">로그인 ID</label>
+        <div class="form-floating">
             <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
-                   th:errorclass="field-error">
-            <div class="field-error" th:errors="*{loginId}" />
+            placeholder="아이디를 입력하세요." th:errorclass="is-invalid">
+            <label for="loginId">ID</label>
         </div>
-        <div>
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}"
-                   class="form-control"
-                   th:errorclass="field-error">
-            <div class="field-error" th:errors="*{password}" />
+        <div class="is-invalid" th:errors="*{loginId}"/>
+
+        <div class="form-floating input-group mb-3">
+            <input type="password" id="password" th:field="*{password}" class="form-control"
+                   placeholder="비밀번호를 입력하세요." th:errorclass="is-invalid">
+            <span class="input-group-text" id="inputGroup-sizing-lg" style="background-color: white;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" id="passwordShow" fill="currentColor"
+                     class="bi bi-eye" viewBox="0 0 16 16" style="color: lightgrey;">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                </svg>
+            </span>
         </div>
-        <hr class="my-4">
+        <div class="is-invalid" th:errors="*{password}"/>
+
+        <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">ID 기억하기</label>
+        </div>
+
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">로그인
+                <button class="w-100 btn btn-primary btn-lg" id="loginBtn" type="submit">로그인
                 </button>
             </div>
-            <div class="col">
-                <button class="w-100 btn btn-secondary btn-lg"
-                        onclick="location.href='items.html'"
-                        th:onclick="|location.href='@{/}'|" type="button">취소</button>
-            </div>
+<!--            <div class="col">-->
+<!--                <button class="w-100 btn btn-secondary btn-lg"-->
+<!--                        onclick="location.href='items.html'"-->
+<!--                        th:onclick="|location.href='@{/}'|" type="button">취소</button>-->
+<!--            </div>-->
         </div>
     </form>
 </div> <!-- /container -->
