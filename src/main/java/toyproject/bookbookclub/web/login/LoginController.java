@@ -48,6 +48,7 @@ public class LoginController {
     //세션이 있으면 있는 세션을 반환, 없으면 신규 세션 생성
     HttpSession session = request.getSession();
     session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+    session.setAttribute("loginId", form.getLoginId());
 
     //redirectUrl 적용
     return "redirect:" + redirectURL;

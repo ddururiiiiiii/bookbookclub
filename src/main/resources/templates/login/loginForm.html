@@ -63,8 +63,13 @@
 
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" id="loginBtn" type="submit">로그인
+                <button class="w-100 btn btn-secondary btn-lg" type="button"
+                        th:onclick="|location.href='@{/basic/members/join}'|">
+                    회원 가입
                 </button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" id="loginBtn" type="submit">로그인</button>
             </div>
 <!--            <div class="col">-->
 <!--                <button class="w-100 btn btn-secondary btn-lg"-->

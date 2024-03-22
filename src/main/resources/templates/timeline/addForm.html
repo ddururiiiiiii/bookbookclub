@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link href="../css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/timeline/addForm.js}"></script>
     <style>
         .container {
             max-width: 560px;
@@ -12,6 +13,10 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+        #profileImagePreview {
+            border-radius: 70%;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -19,44 +24,62 @@
     <div class="py-5 text-center">
         <h2 th:text="#{page.addTimeline}">타임라인 등록</h2>
     </div>
-    <h4 class="mb-3" th:text="#{page.addTimeline}">타임라인 등록</h4>
-    <form action="timeline.html" th:action th:object="${timeline}" method="post">
-        <div>
-            <label for="timelineId" th:text="#{label.timeline.timelineId}">타임라인 ID</label>
-            <input type="text" id="timelineId" th:field="*{timelineId}" class="form-control" placeholder="타임라인 아이디를 입력하세요">
-        </div>
-        <div>
-            <label for="memberId" th:text="#{label.member.id}">회원 ID</label>
-            <input type="text" id="memberId" th:field="*{memberId}" class="form-control" placeholder="회원아이디 입력하세요">
-        </div>
-        <div>
-            <label for="bookId" th:text="#{label.timeline.bookId}">책ID</label>
-            <input type="text" id="bookId" th:field="*{bookId}"
-                   th:errorclass="field-error" class="form-control" placeholder="책아이디를 입력하세요">
-            <div class="field-error" th:errors="*{bookId}">책ID 오류</div>
-        </div>
-        <div>
-            <label for="bookImg" th:text="#{label.timeline.bookImg}">책이미지</label>
-            <input type="text" i d="bookImg" th:field="*{bookImg}" class="form-control" placeholder="이미지를 입력하세요">
-        </div>
-        <div>
-            <label for="content" th:text="#{label.timeline.content}">내용</label>
-            <input type="text" id="content" th:field="*{content}"
-                   th:errorclass="field-error"  class="form-control" placeholder="내용을 입력하세요">
-            <div class="field-error" th:errors="*{content}">내용 오류</div>
+
+    <div th:if="${profileImage}" style="margin-bottom: 10px;">
+        <img id="profileImagePreview" th:src="|/basic/members/images/${profileImage.getStoreFileName()}|" width="16" height="16"/>
+        <span class="h5" th:text="${member.nickName}"></span>
+        <span class="h5" style="color: gray;" th:text="'@' + ${member.id}"></span>
+    </div>
+
+    <form action="timeline.html" id="addForm" th:action th:object="${timeline}" method="post">
+        <div th:unless="${profileImage}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: gray;">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+            <span class="h6" style="color: gray;" th:text="'@' + ${member.id}"></span>
         </div>
 
-        <hr class="my-4">
-        <div class="row">
-            <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.timeline.save}">타임라인 등록</button>
+        <div style="margin-bottom: 10px;">
+            <span class="h6">내가 읽은 책 / </span>
+            <span class="h6"  th:if="*{bookId}" th:text="*{bookId}"></span>
+            <span class="h6" style="color: red;" th:unless="*{bookId}">읽은 책을 검색해주세요.</span>
+            <button type="button" class="btn btn-outline-info btn-sm">읽은 책 찾기</button>
+        </div>
+
+        <div style="width: 100%; height: 150px;">
+
+            <div style="float: left; width: 20%; text-align: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16" style="color: gray; padding-right: 10px;">
+                    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+                </svg>
+                <input type="text" id="bookImg" th:field="*{bookImg}" class="form-control" placeholder="이미지를 입력하세요" style="display: none;">
             </div>
-            <div class="col">
-                <button class="w-100 btn btn-secondary btn-lg"
-                        onclick="location.href='allTimeline.html'"
-                        th:onclick="|location.href='@{/timeline/allTimeline}'|" type="button" th:text="#{button.cancel}">취소</button>
+
+            <div style="float: right; width: 80%;">
+                <div class="form-floating">
+                    <textarea class="form-control" id="content" th:field="*{content}" th:errorclass="is-invalid"
+                              placeholder="느낀점을 공유해주세요." style="height: 120px; resize: none;"></textarea>
+                    <label for="content">소개글</label>
+                    <div id="contentCounter" style="font-size: 0.87em; color: gray; text-align: right;">0/120</div>
+                    <div class="is-invalid" th:errors="*{content}">내용 오류</div>
+                    <div class="is-invalid" id="contentError" style="display: none;">글자수 제한</div>
+                </div>
             </div>
         </div>
+        <div style="width: 100%;">
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" id="saveBtn"
+                            th:text="#{button.timeline.save}">타임라인 등록</button>
+                </div>
+                <div class="col">
+                    <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='allTimeline.html'"
+                            th:onclick="|location.href='@{/timeline}'|" type="button" th:text="#{button.cancel}">취소</button>
+                </div>
+            </div>
+        </div>
+
     </form>
 </div> <!-- /container -->
 </body>
