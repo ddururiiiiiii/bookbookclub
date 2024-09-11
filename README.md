@@ -22,6 +22,14 @@
     <li>JAVA, Spring boot, JPA, HTML, Javascript, Bootstrap</li>
  </ul>
 <br>
+<h2>구현 화면</h2>
+[로그인/회원가입]
+<img src="https://blog.kakaocdn.net/dn/lRHdy/btsFZFh6f8m/aVbh9C9qa40ker2TuOmD21/img.png">
+<img src="https://blog.kakaocdn.net/dn/5XFo6/btsFUlJ8Eos/RB5xZ05dwZrRZLEuKSK4LK/img.png">
+[타임라인 조회]
+<img src="https://blog.kakaocdn.net/dn/AGCb5/btsEhGueuAV/KQSEeQZMzhE9wMlMnaVQFK/img.png">
+[타임라인 등록]<br>
+<img src="https://blog.kakaocdn.net/dn/kDJcZ/btsF11DCUhO/Yld3SzkJEp4xcYqOHtde40/img.png">
 <br>
 <h2>개발일지</h2>
  <ul>
