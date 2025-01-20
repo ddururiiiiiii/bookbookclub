@@ -36,4 +36,9 @@ public class Likes {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedDate;
+
+    public Likes(Member member, Timeline timeline) {
+        this.member = member;
+        this.timeline = timeline;
+    }
 }
