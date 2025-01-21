@@ -7,7 +7,7 @@
 <h2>관심사 및 목표</h2>
  <ul>
  </ul>
- <br>
+ <br>s
  <h2>구현 기능</h2>
 <br>
 <h2>사용 기술</h2>
@@ -24,5 +24,6 @@
    <li>#004 타임라인 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/571</li>
    <li>#004 팔로우 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/572</li>
    <li>#005 좋아요 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/573</li>
+   <li>#006 회원 등록/수정/조회 API 개발 https://ddururiiiiiii.tistory.com/575</li>
  </ul>
 <br>
