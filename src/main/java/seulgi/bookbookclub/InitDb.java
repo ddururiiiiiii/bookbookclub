@@ -26,8 +26,8 @@ public class InitDb {
         public void dbInit1() {
 
             //회원 2명 생성
-            Member member1 = new Member("이름1", "1234", "닉네임1");
-            Member member2 = new Member("이름2", "3456", "닉네임2");
+            Member member1 = new Member("이름1", "1234", "닉네임1", "정보1");
+            Member member2 = new Member("이름2", "3456", "닉네임2", "정보2");
             em.persist(member1);
             em.persist(member2);
 

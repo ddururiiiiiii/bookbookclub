@@ -18,6 +18,9 @@ public class MemberRepository {
         em.persist(member);
     }
 
+    public void update(Member member) {
+        em.merge(member);
+    }
 
     public Member findByMemberSeq(Integer memberSeq){
         return em.find(Member.class, memberSeq);

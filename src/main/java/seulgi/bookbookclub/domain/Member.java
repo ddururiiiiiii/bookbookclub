@@ -50,10 +50,20 @@ public class Member {
     @Column(nullable = false)
     private LocalDateTime last_modified_date;
 
-    public Member(String memberId, String password, String nickname) {
+    public Member(String memberId, String password, String nickname, String info) {
         this.memberId = memberId;
         this.password = password;
         this.nickname = nickname;
+        this.info = info;
     }
+
+    public Member(Member member, String password, String nickname, String info) {
+        this.memberSeq = member.getMemberSeq();
+        this.memberId = member.getMemberId();
+        this.password = password;
+        this.nickname = nickname;
+        this.info = info;
+    }
+
 
 }
