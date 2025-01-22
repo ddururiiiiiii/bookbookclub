@@ -27,9 +27,24 @@ public class TimelineRepository {
         timeline.delete(); //상태변경
     }
 
+    public void update() {
+    }
+
     // 특정 회원의 타임라인 조회
+//    public List<Timeline> findTimelinesByMember(Integer memberSeq) {
+//        return em.createQuery("SELECT t FROM Timeline t WHERE t.member.memberSeq = :memberSeq AND t.state = :state ORDER BY t.createdDate DESC", Timeline.class)
+//                .setParameter("memberSeq", memberSeq)
+//                .setParameter("state", State.ACTIVE)
+//                .getResultList();
+//    }
+
     public List<Timeline> findTimelinesByMember(Integer memberSeq) {
-        return em.createQuery("SELECT t FROM Timeline t WHERE t.member.memberSeq = :memberSeq AND t.state = :state ORDER BY t.createdDate DESC", Timeline.class)
+        return em.createQuery("SELECT t FROM Timeline t " +
+                        "JOIN FETCH t.member " +
+                        "JOIN FETCH t.book " +
+                        "WHERE t.member.memberSeq = :memberSeq " +
+                        "AND t.state = :state " +
+                        "ORDER BY t.createdDate DESC", Timeline.class)
                 .setParameter("memberSeq", memberSeq)
                 .setParameter("state", State.ACTIVE)
                 .getResultList();

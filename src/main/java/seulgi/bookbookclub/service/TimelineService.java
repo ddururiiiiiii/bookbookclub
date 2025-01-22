@@ -26,12 +26,10 @@ public class TimelineService {
 
     //글 작성
     @Transactional
-    public Integer createTimeline(Integer memberSeq, Long bookSeq, String contents) {
+    public Integer createTimeline(Integer memberSeq, Book book, String contents) {
         Member member = memberRepository.findByMemberSeq(memberSeq);
-        Book book = bookRepository.findByBookSeq(bookSeq);
-
-        Timeline timeline = Timeline.createTimeline(member, contents, book);
-
+        bookRepository.save(book);
+        Timeline timeline = Timeline.createTimeline(member, book, contents);
         timelineRepository.save(timeline);
         return timeline.getTimelineSeq();
     }

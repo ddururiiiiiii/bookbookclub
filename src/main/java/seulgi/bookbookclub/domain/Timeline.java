@@ -47,18 +47,18 @@ public class Timeline {
     @Column(nullable = false)
     private LocalDateTime updatedDate;
 
-    public Timeline(Member member, String contents, Book book) {
+    public Timeline(Member member, Book book, String contents ) {
         this.member = member;
-        this.contents = contents;
         this.book = book;
+        this.contents = contents;
     }
 
     // 생성 메서드
-    public static Timeline createTimeline(Member member, String contents, Book book) {
+    public static Timeline createTimeline(Member member, Book book, String contents) {
         if (member == null) throw new IllegalArgumentException("Member는 null일 수 없습니다.");
         if (book == null) throw new IllegalArgumentException("Book은 null일 수 없습니다.");
         if (contents == null || contents.isBlank()) throw new IllegalArgumentException("Contents는 필수입니다.");
-        return new Timeline(member, contents, book);
+        return new Timeline(member, book, contents);
     }
 
     //논리 삭제
