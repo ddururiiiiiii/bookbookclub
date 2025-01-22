@@ -50,6 +50,8 @@ public class Member {
     @Column(nullable = false)
     private LocalDateTime last_modified_date;
 
+
+
     public Member(String memberId, String password, String nickname, String info) {
         this.memberId = memberId;
         this.password = password;
