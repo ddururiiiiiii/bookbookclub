@@ -38,8 +38,8 @@ public class InitDb {
             em.persist(book2);
 
             //이름1에 타임라인2개 생성
-            Timeline timeline1 = new Timeline(member1, "내용1", book1);
-            Timeline timeline2 = new Timeline(member1, "내용2", book2);
+            Timeline timeline1 = new Timeline(member1, book1 ,"내용1");
+            Timeline timeline2 = new Timeline(member1, book2, "내용2");
             em.persist(timeline1);
             em.persist(timeline2);
 
