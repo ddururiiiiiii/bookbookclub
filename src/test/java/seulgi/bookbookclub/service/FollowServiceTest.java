@@ -24,8 +24,8 @@ class FollowServiceTest {
     @Test
     void 팔로우추가() {
         // given
-        Member follower = new Member("followerId", "1234", "팔로워");
-        Member following = new Member("followingId", "5678", "팔로잉");
+        Member follower = new Member("followerId", "1234", "팔로워", "정보1");
+        Member following = new Member("followingId", "5678", "팔로잉","정보2");
 
         memberRepository.save(follower);
         memberRepository.save(following);
@@ -42,8 +42,8 @@ class FollowServiceTest {
     @Test
     void 팔로우중복방지() {
         // given
-        Member follower = new Member("followerId", "1234", "팔로워");
-        Member following = new Member("followingId", "5678", "팔로잉");
+        Member follower = new Member("followerId", "1234", "팔로워", "정보1");
+        Member following = new Member("followingId", "5678", "팔로잉","정보2");
 
         memberRepository.save(follower);
         memberRepository.save(following);
@@ -59,8 +59,8 @@ class FollowServiceTest {
     @Test
     void 언팔로우() {
         // given
-        Member follower = new Member("followerId", "1234", "팔로워");
-        Member following = new Member("followingId", "5678", "팔로잉");
+        Member follower = new Member("followerId", "1234", "팔로워", "정보1");
+        Member following = new Member("followingId", "5678", "팔로잉","정보2");
 
         memberRepository.save(follower);
         memberRepository.save(following);
@@ -77,9 +77,9 @@ class FollowServiceTest {
     @Test
     void 팔로잉을한_목록조회() {
         // given
-        Member follower = new Member("followerId", "1234", "팔로워");
-        Member following1 = new Member("following1Id", "5678", "팔로잉1");
-        Member following2 = new Member("following2Id", "91011", "팔로잉2");
+        Member follower = new Member("followerId", "1234", "팔로워","정보");
+        Member following1 = new Member("following1Id", "5678", "팔로잉1","정보");
+        Member following2 = new Member("following2Id", "91011", "팔로잉2","정보");
 
         memberRepository.save(follower);
         memberRepository.save(following1);
@@ -101,9 +101,9 @@ class FollowServiceTest {
     @Test
     void 팔로잉을당한_목록조회() {
         // given
-        Member following = new Member("followingId", "5678", "팔로잉");
-        Member follower1 = new Member("follower1Id", "1234", "팔로워1");
-        Member follower2 = new Member("follower2Id", "91011", "팔로워2");
+        Member following = new Member("followingId", "5678", "팔로잉","정보");
+        Member follower1 = new Member("follower1Id", "1234", "팔로워1","정보");
+        Member follower2 = new Member("follower2Id", "91011", "팔로워2","정보");
 
         memberRepository.save(following);
         memberRepository.save(follower1);

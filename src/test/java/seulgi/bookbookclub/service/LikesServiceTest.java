@@ -29,13 +29,13 @@ class LikesServiceTest {
     @Test
     void 좋아요추가() {
         // given
-        Member member = new Member("testMember", "1234", "닉네임");
+        Member member = new Member("testMember", "1234", "닉네임","정보1");
         memberRepository.save(member);
 
         Book book = new Book("12345678910", "책제목", "글쓴이", "출판사");
         bookRepository.save(book);
 
-        Timeline timeline = new Timeline(member, "테스트 글 내용", book);
+        Timeline timeline = new Timeline(member, book, "테스트 글 내용");
         timelineRepository.save(timeline);
 
         // when
@@ -49,13 +49,13 @@ class LikesServiceTest {
     @Test
     void 좋아요중복방지() {
         // given
-        Member member = new Member("testMember", "1234", "닉네임");
+        Member member = new Member("testMember", "1234", "닉네임","정보1");
         memberRepository.save(member);
 
         Book book = new Book("12345678910", "책제목", "글쓴이", "출판사");
         bookRepository.save(book);
 
-        Timeline timeline = new Timeline(member, "테스트 글 내용", book);
+        Timeline timeline = new Timeline(member, book, "테스트 글 내용");
         timelineRepository.save(timeline);
 
         likesService.addLike(member.getMemberSeq(), timeline.getTimelineSeq());
@@ -70,13 +70,13 @@ class LikesServiceTest {
     @Test
     void 좋아요취소() {
         // given
-        Member member = new Member("testMember", "1234", "닉네임");
+        Member member = new Member("testMember", "1234", "닉네임","정보1");
         memberRepository.save(member);
 
         Book book = new Book("12345678910", "책제목", "글쓴이", "출판사");
         bookRepository.save(book);
 
-        Timeline timeline = new Timeline(member, "테스트 글 내용", book);
+        Timeline timeline = new Timeline(member, book, "테스트 글 내용");
         timelineRepository.save(timeline);
 
         likesService.addLike(member.getMemberSeq(), timeline.getTimelineSeq());

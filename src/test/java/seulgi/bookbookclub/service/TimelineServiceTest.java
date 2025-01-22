@@ -30,14 +30,14 @@ class TimelineServiceTest {
     @Test
     void 글작성(){
         // given
-        Member member = new Member("testid", "1234", "닉네임");
+        Member member = new Member("testid", "1234", "닉네임", "정보1");
         memberRepository.save(member); // Member 저장
         Book book = new Book("1234567890123", "테스트 책", "테스트 저자", "테스트 출판사");
         bookRepository.save(book); // Book 저장
         String contents = "이 책 정말 재미있었습니다!";
 
         // when
-        Integer timelineId = timelineService.createTimeline(member.getMemberSeq(), book.getBookSeq(), contents);
+        Integer timelineId = timelineService.createTimeline(member.getMemberSeq(),book, contents);
 
         // then
         Timeline savedTimeline = timelineRepository.findById(timelineId);
@@ -51,12 +51,12 @@ class TimelineServiceTest {
     @Test
     void 글삭제(){
         //given
-        Member member = new Member("testid", "1234", "닉네임");
+        Member member = new Member("testid", "1234", "닉네임", "정보1");
         memberRepository.save(member);
         Book book = new Book("1234567890123", "테스트 책", "테스트 저자", "테스트 출판사");
         bookRepository.save(book);
         String contents = "이 책 정말 재미있었습니다!";
-        Integer timelineId = timelineService.createTimeline(member.getMemberSeq(), book.getBookSeq(), contents);
+        Integer timelineId = timelineService.createTimeline(member.getMemberSeq(), book, contents);
 
         //when
         timelineService.deleteTimeline(timelineId);
@@ -70,7 +70,7 @@ class TimelineServiceTest {
     @Test
     void 특정회원_타임라인조회() {
         // given
-        Member member = new Member("testid", "1234", "닉네임");
+        Member member = new Member("testid", "1234", "닉네임", "정보1");
         memberRepository.save(member);
 
         Book book1 = new Book("1234567890123", "책1", "저자1", "출판사1");
@@ -78,8 +78,8 @@ class TimelineServiceTest {
         bookRepository.save(book1);
         bookRepository.save(book2);
 
-        timelineService.createTimeline(member.getMemberSeq(), book1.getBookSeq(), "첫 번째 글");
-        timelineService.createTimeline(member.getMemberSeq(), book2.getBookSeq(), "두 번째 글");
+        timelineService.createTimeline(member.getMemberSeq(), book1, "첫 번째 글");
+        timelineService.createTimeline(member.getMemberSeq(), book2, "두 번째 글");
 
         // when
         List<Timeline> timelines = timelineService.getMemberTimelines(member.getMemberSeq());
@@ -94,9 +94,9 @@ class TimelineServiceTest {
     @Test
     void 팔로우회원_타임라인조회() {
         // given
-        Member follower = new Member("followerId", "1234", "팔로워");
-        Member following1 = new Member("following1Id", "5678", "팔로잉1");
-        Member following2 = new Member("following2Id", "91011", "팔로잉2");
+        Member follower = new Member("followerId", "1234", "팔로워","정보");
+        Member following1 = new Member("following1Id", "5678", "팔로잉1","정보");
+        Member following2 = new Member("following2Id", "91011", "팔로잉2", "정보");
 
         memberRepository.save(follower);
         memberRepository.save(following1);
@@ -110,8 +110,8 @@ class TimelineServiceTest {
         bookRepository.save(book1);
         bookRepository.save(book2);
 
-        timelineService.createTimeline(following1.getMemberSeq(), book1.getBookSeq(), "팔로잉1의 첫 번째 글");
-        timelineService.createTimeline(following2.getMemberSeq(), book2.getBookSeq(), "팔로잉2의 첫 번째 글");
+        timelineService.createTimeline(following1.getMemberSeq(), book1, "팔로잉1의 첫 번째 글");
+        timelineService.createTimeline(following2.getMemberSeq(), book2, "팔로잉2의 첫 번째 글");
 
         // when
         List<Timeline> timelines = timelineService.getFollowedTimelines(follower.getMemberSeq());
