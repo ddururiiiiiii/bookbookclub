@@ -22,8 +22,9 @@
    <li>#002 엔터티 설계 및 개발 https://ddururiiiiiii.tistory.com/566</li>
    <li>#003 회원 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/569</li>
    <li>#004 타임라인 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/571</li>
-   <li>#004 팔로우 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/572</li>
-   <li>#005 좋아요 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/573</li>
-   <li>#006 회원 등록/수정/조회 API 개발 https://ddururiiiiiii.tistory.com/575</li>
+   <li>#005 팔로우 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/572</li>
+   <li>#006 좋아요 도메인 개발 및 테스트 https://ddururiiiiiii.tistory.com/573</li>
+   <li>#007 회원 등록/수정/조회 API 개발 https://ddururiiiiiii.tistory.com/575</li>
+   <li>#008 타임라인 등록/삭제/조회 API 개발 https://ddururiiiiiii.tistory.com/576</li>
  </ul>
 <br>

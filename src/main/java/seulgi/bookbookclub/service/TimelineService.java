@@ -44,18 +44,23 @@ public class TimelineService {
         timeline.delete();
     }
 
-    // 특정 회원의 타임라인 조회
+    //특정회원이 올린 타임라인 조회
     public List<Timeline> getMemberTimelines(Integer memberSeq){
         return timelineRepository.findTimelinesByMember(memberSeq);
     }
 
-    // 팔로우한 회원들의 타임라인 조회
+    //팔로잉한 회원들의 타임라인 조회
     public List<Timeline> getFollowedTimelines(Integer memberSeq) {
-        List<Follow> follows = followService.getFollowers(memberSeq);
+        List<Follow> follows = followService.getFollowings(memberSeq);
         List<Integer> followingSeqs = follows.stream()
                 .map(follow -> follow.getFollowing().getMemberSeq())
                 .collect(Collectors.toList());
         return timelineRepository.findByFollowers(followingSeqs);
+    }
+
+    // 타임라인 ID로 타임라인 단건 조회
+    public Timeline getTimelineByTimeLineId(Integer timelineSeq){
+         return timelineRepository.findById(timelineSeq);
     }
 
 }
