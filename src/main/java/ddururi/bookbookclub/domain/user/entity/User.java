@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @Setter
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
