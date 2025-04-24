@@ -2,19 +2,22 @@ package ddururi.bookbookclub.domain.user.service;
 
 
 import ddururi.bookbookclub.domain.emailverification.service.EmailVerificationService;
-import ddururi.bookbookclub.global.exception.DuplicateNicknameException;
+import ddururi.bookbookclub.domain.user.enums.UserStatus;
+import ddururi.bookbookclub.domain.user.policy.UserPolicy;
+import ddururi.bookbookclub.global.exception.*;
 import ddururi.bookbookclub.domain.user.dto.UserLoginRequest;
 import ddururi.bookbookclub.domain.user.dto.UserResponse;
 import ddururi.bookbookclub.domain.user.dto.UserSignupRequest;
 import ddururi.bookbookclub.domain.user.dto.UserUpdateRequest;
 import ddururi.bookbookclub.domain.user.entity.User;
 import ddururi.bookbookclub.domain.user.repository.UserRepository;
-import ddururi.bookbookclub.global.exception.DuplicateEmailException;
-import ddururi.bookbookclub.global.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -25,25 +28,31 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final EmailVerificationService emailVerificationService;
 
+    @Value("${custom.user.default-profile-image}")
+    private String defaultProfileImageUrl;
+
     //회원가입
     public UserResponse signup(UserSignupRequest request){
-        validateDuplicateEmail(request.getEmail());
-        validateDuplicateNickname(request.getNickname());
 
-        // 이메일 인증 확인
-        if (!emailVerificationService.isEmailVerified(request.getEmail())) {
-            throw new IllegalStateException("이메일 인증이 완료되지 않았습니다.");
-        }
+        validateEmailVerification(request.getEmail());
+        validateRejoinAvailable(request.getEmail());
+        validateDuplicateNickname(request.getNickname());
 
         User user = User.create(
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
                 request.getNickname()
         );
-
+        user.setProfileImageUrl(defaultProfileImageUrl);
         userRepository.save(user);
 
         return UserResponse.from(user);
+    }
+
+    private void validateEmailVerification(String email) {
+        if (!emailVerificationService.isEmailVerified(email)) {
+            throw new EmailNotVerifiedException();
+        }
     }
 
     //이메일 중복 확인
@@ -58,6 +67,19 @@ public class UserService {
         if (userRepository.existsByNickname(nickname)) {
             throw new DuplicateNicknameException();
         }
+    }
+
+    private void validateRejoinAvailable(String email) {
+        userRepository.findByEmail(email).ifPresent(user -> {
+            if (user.getStatus() == UserStatus.WITHDRAWN) {
+                LocalDateTime rejoinAvailableDate = user.getWithdrawnAt().plusMonths(UserPolicy.REJOIN_RESTRICTION_MONTHS);
+                if (LocalDateTime.now().isBefore(rejoinAvailableDate)) {
+                    throw new RejoinRestrictionException();
+                }
+            } else {
+                throw new DuplicateEmailException(); // ACTIVE 계정일 경우
+            }
+        });
     }
 
     // 이메일 중복 확인 (API 용도)
@@ -81,10 +103,13 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(UserNotFoundException::new);
 
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        if (user.getStatus() == UserStatus.WITHDRAWN) {
+            throw new UserWithdrawnException();
         }
 
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new InvalidPasswordException();
+        }
         return user;
     }
 
@@ -103,4 +128,23 @@ public class UserService {
         user.setBio(request.getBio());
         // save 호출 안 해도 됨 → JPA가 변경감지로 UPDATE 수행
     }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Transactional
+    public void withdraw(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.withdraw();
+    }
+
+    @Transactional
+    public void updateProfileImage(Long userId, String imageUrl) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+        user.setProfileImageUrl(imageUrl);
+    }
+
 }

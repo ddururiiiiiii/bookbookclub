@@ -1,13 +1,13 @@
-package ddururi.bookbookclub.domain.user.dto;
+package ddururi.bookbookclub.global.common;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
 @AllArgsConstructor
-public class LoginResponse {
+public class TokenResponse {
     private String accessToken;
     private String refreshToken;
-    private UserResponse user;
 }
-
