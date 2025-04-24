@@ -34,12 +34,17 @@
 
 <br>
 
-## 💻✨ 주요 기능
-- 회원 가입 및 로그인 (일반 + 소셜 로그인 준비 중)
-- 도서 검색 (외부 도서 API 연동 예정)
-- 책 관련 게시글 작성, 조회, 수정, 삭제
-- 게시글 목록 페이징 및 키워드 검색 기능
-- API 응답 표준화, 예외 처리 공통화
+## 💻✨ 주요 기능 구현 현황
+
+| 구분 | 구현 기능 |
+|------|----------|
+| **회원 가입 및 인증** | 이메일 인증 기반 회원가입<br>Redis와 DB 동시 저장<br>이메일 인증 상태 확인 및 가입 제한 |
+| **로그인 / 인증** | JWT 기반 로그인<br>Access/Refresh Token 관리 (Redis 활용) |
+| **소셜 로그인** | Google, Naver 연동<br>Provider별 서비스 분리<br>닉네임 중복 시 예외 처리 |
+| **회원 정보 관리** | 회원 조회 API (`/me`)<br>닉네임 중복 확인 API<br>프로필 이미지 업로드 및 저장 (로컬, 향후 S3 예정) |
+| **예외 처리 및 공통 응답 포맷** | `@RestControllerAdvice` 기반 글로벌 예외 처리<br>`ApiResponse<T>` 통일된 응답 포맷 적용 |
+| **보안** | URL 접근 제어 설정<br>비밀번호 암호화(BCrypt) |
+| **기타** | 이메일 인증 내역 테이블 관리<br>로그인 이력/재가입 제어 로직 구현 예정 |
 
 
 <br>
@@ -49,16 +54,22 @@
 <br>
 
 ## 🔧 사용 기술
+## Backend
+- Java 17
+- Spring Boot 3
+- Spring Security (JWT, OAuth2)
+- JPA (Hibernate), QueryDSL
+- Redis (Token 저장소 및 인증용도)
+- MySQL
 
-| 구분           | 기술                                                          |
-|----------------|---------------------------------------------------------------|
-| **Backend**    | Java 17, Spring Boot, Spring MVC, JPA, QueryDSL              |
-| **Database**   | MySQL                                                         |
-| **Frontend**   | JavaScript (ES6), Thymeleaf                                   |
-| **Security**   | Spring Security, BCryptPasswordEncoder                        |
-| **Testing**    | JUnit, Mockito                                                |
-| **Tooling**    | Git, Lombok, P6Spy, Logback                                   |
+### Frontend
+- Thymeleaf (기초 UI 구성)
+- JavaScript (ES6)
 
+### DevOps
+- Gradle
+- Git (Git Flow 예정)
+- Docker / Kubernetes (추후 도입 예정)
 
 <br>
 
@@ -68,13 +79,14 @@
 
 ## 📁 프로젝트 구조
 ~~~
-bookbookclub/
-├── domain/             # 핵심 도메인 로직
-├── application/        # 서비스 계층
-├── api/                # 컨트롤러
-├── common/             # 공통 응답, 예외 처리 등
-└── resources/
-    └── application.yml # 환경 설정
+src/main/java/ddururi/bookbookclub/
+├── domain/              # 도메인별 핵심 로직 (예: user, post 등 추가 예정)
+└── global/
+    ├── common/         # 공통 응답 포맷, 상수 등
+    ├── config/         # 전역 설정 클래스
+    ├── exception/      # 커스텀 예외, 예외 핸들러
+    ├── jwt/            # JWT 관련 유틸 및 필터
+    └── security/       # 스프링 시큐리티 설정 및 필터
 
 ~~~
 
@@ -91,4 +103,14 @@ bookbookclub/
 - [#000 프로젝트 생성 (프로젝트 생성, MySQL 연결, 개발 편의 설정, 패키지 설정 등)](https://ddururiiiiiii.tistory.com/598)
 - [#001 회원 도메인(User) 개발](https://ddururiiiiiii.tistory.com/604)
 - [#002 회원(User) 도메인 단위 테스트](https://ddururiiiiiii.tistory.com/605)
-
+- [#003 회원(User) 도메인 회원가입 API 구현 + 테스트](https://ddururiiiiiii.tistory.com/608)
+- [#004 회원 정보 수정 API 구현](https://ddururiiiiiii.tistory.com/610)
+- [#005 로그인 구현 (Feat.JWT 기반 인증)](https://ddururiiiiiii.tistory.com/611)
+- [#006 회원가입 전, 이메일 인증 구현](https://ddururiiiiiii.tistory.com/613)
+- [#007 로그인 구현2 (refreshToken 도입) / 로그아웃](https://ddururiiiiiii.tistory.com/614)
+- [#008 로그인 구현3 (refreshToken 재발급, AccessToken 블랙리스트 기능)](https://ddururiiiiiii.tistory.com/615)
+- [#009 회원탈퇴 구현 (Spring Scheduler)](https://ddururiiiiiii.tistory.com/616)
+- [#010 회원가입 수정 (6개월 이내 재가입 불가능)](https://ddururiiiiiii.tistory.com/617)
+- [#011 Oauth 로그인 구현 (구글)](https://ddururiiiiiii.tistory.com/618)
+- [#012 Oauth 로그인 구현 (네이버)](https://ddururiiiiiii.tistory.com/619)
+- [#013 회원 프로필 사진 등록 기능 구현](https://ddururiiiiiii.tistory.com/620)
