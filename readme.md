@@ -117,3 +117,4 @@ src/main/java/ddururi/bookbookclub/
 - [#014 글로벌 예외처리 및 API 응답 포맷 통일](https://ddururiiiiiii.tistory.com/621)
 
 🧪 이건 git 브랜치 실습입니다.
+🔁 이건 PR 실습입니다.
