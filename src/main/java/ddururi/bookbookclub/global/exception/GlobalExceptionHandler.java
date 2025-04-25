@@ -6,6 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * 전역 예외 처리 핸들러
+ * - 각 예외 상황에 맞는 HTTP 상태코드 및 응답 구조 반환
+ * - ApiResponse.fail(...) 구조 사용
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

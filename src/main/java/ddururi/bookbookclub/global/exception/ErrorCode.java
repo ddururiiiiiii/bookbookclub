@@ -3,6 +3,10 @@ package ddururi.bookbookclub.global.exception;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 비즈니스 로직에서 사용하는 에러 코드 정의 enum
+ * - 예외 코드 문자열 + 사용자 메시지 구성
+ */
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {

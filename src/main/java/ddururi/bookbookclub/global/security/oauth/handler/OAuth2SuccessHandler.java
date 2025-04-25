@@ -17,6 +17,11 @@ import static ddururi.bookbookclub.domain.user.policy.UserPolicy.*;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * OAuth2 로그인 성공 시 처리 핸들러
+ * - JWT 발급 및 Redis에 RefreshToken 저장
+ * - JSON 형식으로 토큰 응답 반환
+ */
 @RequiredArgsConstructor
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
@@ -28,6 +33,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+        // accessToken, refreshToken 생성 후 JSON 응답
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         // JWT 발급

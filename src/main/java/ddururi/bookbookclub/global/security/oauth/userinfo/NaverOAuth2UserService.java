@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+/**
+ * 네이버 OAuth2 사용자 정보 처리 서비스
+ * - 네이버 응답: { "response": { "email": "...", "nickname": "...", ... } }
+ */
 @RequiredArgsConstructor
 @Service
 public class NaverOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
+/**
+ * JWT 생성 및 검증 유틸 클래스
+ */
 @Component
 public class JwtUtil {
 
@@ -21,7 +24,9 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    // JWT 생성
+    /**
+     * JWT 생성 (AccessToken)
+     */
     public String createToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
@@ -31,7 +36,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    // JWT 검증
+    /**
+     * JWT 유효성 검증
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -41,7 +48,9 @@ public class JwtUtil {
         }
     }
 
-    // JWT에서 이메일 추출
+    /**
+     * JWT에서 이메일 추출
+     */
     public String getEmailFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token)
@@ -49,6 +58,9 @@ public class JwtUtil {
                 .getSubject();
     }
 
+    /**
+     * 토큰의 남은 유효시간(ms)
+     */
     public long getRemainingExpiration(String token) {
         Date expiration = Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -60,7 +72,9 @@ public class JwtUtil {
         return expiration.getTime() - System.currentTimeMillis();
     }
 
-
+    /**
+     * RefreshToken 생성
+     */
     public String createRefreshToken() {
         return Jwts.builder()
                 .setIssuedAt(new Date())

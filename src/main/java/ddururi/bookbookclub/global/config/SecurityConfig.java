@@ -14,6 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Spring Security 설정 클래스
+ * - JWT 인증 필터
+ * - OAuth2 로그인 설정
+ * - 인가 정책 설정
+ */
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -21,11 +27,21 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2UserProviderRouter oAuth2UserProviderRouter;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
+    /**
+     * 비밀번호 암호화용 인코더
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Security Filter Chain 구성
+     * - JWT 기반 인증
+     * - OAuth2 로그인 핸들러 설정
+     * - 특정 API 엔드포인트는 permitAll
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -55,6 +71,9 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * AuthenticationManager 설정 (로그인 시 사용)
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

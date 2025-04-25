@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 사용자 정보 수정 요청 DTO
+ * - 닉네임, 자기소개 수정
+ */
 @Getter
 @Setter
 @NoArgsConstructor

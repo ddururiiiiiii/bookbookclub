@@ -11,6 +11,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Spring Security 및 OAuth2에서 사용할 사용자 정보 래퍼 클래스
+ * - User 엔티티를 기반으로 권한 및 인증 정보 제공
+ */
 @Getter
 public class CustomUserDetails implements UserDetails , OAuth2User {
     @Override
@@ -29,7 +33,7 @@ public class CustomUserDetails implements UserDetails , OAuth2User {
         this.user = user;
     }
 
-    // 권한 설정
+    // ROLE_접두어 붙인 권한 부여
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));

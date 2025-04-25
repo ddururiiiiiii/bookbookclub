@@ -17,6 +17,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * JWT 기반 인증 필터
+ * - 매 요청마다 JWT 유효성 검사 및 사용자 인증 처리
+ * - 블랙리스트 체크 포함
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -28,6 +33,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        // 1. Authorization 헤더에서 Bearer 토큰 추출
+        // 2. 블랙리스트에 등록된 토큰이면 인증 실패
+        // 3. 유효한 토큰이면 사용자 정보 로드 후 SecurityContext에 등록
 
         // Authorization 헤더에서 토큰 추출
         String authHeader = request.getHeader("Authorization");

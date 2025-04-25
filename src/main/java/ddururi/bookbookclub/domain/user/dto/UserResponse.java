@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 사용자 정보를 담는 응답 DTO
+ * - Entity(User) → DTO로 변환
+ */
 @Getter
 @Builder
 @AllArgsConstructor
@@ -17,6 +21,7 @@ public class UserResponse {
     private String profileImageUrl;
 
     public static UserResponse from(User user) {
+        // User 엔티티 → 응답 DTO로 변환
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())

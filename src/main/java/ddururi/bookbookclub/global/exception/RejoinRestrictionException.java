@@ -2,6 +2,9 @@ package ddururi.bookbookclub.global.exception;
 
 import lombok.Getter;
 
+/**
+ * 탈퇴 후 재가입 제한 기간 내 시도 시 발생
+ */
 @Getter
 public class RejoinRestrictionException extends RuntimeException {
     private final ErrorCode errorCode;

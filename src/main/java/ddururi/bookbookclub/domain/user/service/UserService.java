@@ -19,6 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+/**
+ * 사용자 관련 비즈니스 로직을 처리하는 서비스
+ * - 회원가입, 로그인, 회원정보 수정, 탈퇴 등
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -31,7 +35,13 @@ public class UserService {
     @Value("${custom.user.default-profile-image}")
     private String defaultProfileImageUrl;
 
-    //회원가입
+    /**
+     * 회원가입
+     * - 이메일 인증 확인
+     * - 재가입 제한 확인 (탈퇴 후 6개월 제한)
+     * - 닉네임 중복 확인
+     * - 기본 프로필 이미지 설정
+     */
     public UserResponse signup(UserSignupRequest request){
 
         validateEmailVerification(request.getEmail());
@@ -49,6 +59,7 @@ public class UserService {
         return UserResponse.from(user);
     }
 
+    // 이메일 인증 여부 검증
     private void validateEmailVerification(String email) {
         if (!emailVerificationService.isEmailVerified(email)) {
             throw new EmailNotVerifiedException();
@@ -69,6 +80,7 @@ public class UserService {
         }
     }
 
+    // 탈퇴 후 재가입 제한 검증
     private void validateRejoinAvailable(String email) {
         userRepository.findByEmail(email).ifPresent(user -> {
             if (user.getStatus() == UserStatus.WITHDRAWN) {
@@ -113,7 +125,11 @@ public class UserService {
         return user;
     }
 
-    // 회원정보 수정
+    /**
+     * 사용자 프로필 수정
+     * - 닉네임 변경 시 중복 여부 확인
+     * - JPA 변경 감지에 의해 자동 업데이트
+     */
     @Transactional
     public void updateProfile(Long userId, UserUpdateRequest request) {
         User user = userRepository.findById(userId)
@@ -140,6 +156,9 @@ public class UserService {
         user.withdraw();
     }
 
+    /**
+     * 프로필 이미지 경로 수정
+     */
     @Transactional
     public void updateProfileImage(Long userId, String imageUrl) {
         User user = userRepository.findById(userId)
@@ -147,6 +166,11 @@ public class UserService {
         user.setProfileImageUrl(imageUrl);
     }
 
+    /**
+     * 프로필 이미지 삭제
+     * - 기본 이미지로 되돌림
+     * - (추후 실제 파일 삭제 로직도 적용 가능)
+     */
     @Transactional
     public void deleteProfileImage(Long userId) {
         User user = userRepository.findById(userId)

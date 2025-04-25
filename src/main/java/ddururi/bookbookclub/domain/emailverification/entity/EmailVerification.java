@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * 이메일 인증 상태 엔티티
+ * - 이메일 주소별 인증 여부 저장
+ */
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,6 +28,9 @@ public class EmailVerification {
 
     private LocalDateTime verifiedAt;
 
+    /**
+     * 인증 완료 처리
+     */
     public void markAsVerified() {
         this.verified = true;
         this.verifiedAt = LocalDateTime.now();

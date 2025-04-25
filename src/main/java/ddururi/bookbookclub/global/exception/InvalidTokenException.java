@@ -2,6 +2,9 @@ package ddururi.bookbookclub.global.exception;
 
 import lombok.Getter;
 
+/**
+ * 잘못된 또는 만료된 인증 토큰 예외
+ */
 @Getter
 public class InvalidTokenException extends RuntimeException {
     private final ErrorCode errorCode;

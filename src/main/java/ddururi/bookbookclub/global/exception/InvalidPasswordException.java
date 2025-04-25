@@ -2,6 +2,9 @@ package ddururi.bookbookclub.global.exception;
 
 import lombok.Getter;
 
+/**
+ * 로그인 시 비밀번호 불일치 예외
+ */
 @Getter
 public class InvalidPasswordException extends RuntimeException {
     private final ErrorCode errorCode;

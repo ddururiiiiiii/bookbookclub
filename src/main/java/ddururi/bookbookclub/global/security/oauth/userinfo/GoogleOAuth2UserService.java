@@ -12,6 +12,11 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+/**
+ * 구글 OAuth2 사용자 정보 처리 서비스
+ * - 이메일로 기존 사용자 조회
+ * - 없으면 새 사용자 생성
+ */
 @RequiredArgsConstructor
 @Service
 public class GoogleOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -19,6 +24,8 @@ public class GoogleOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final UserRepository userRepository;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        // sub: 구글 유저 고유 식별자
+        // 이메일로 조회 → 없으면 닉네임 중복 체크 후 회원 생성
         OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
 
         String email = oAuth2User.getAttribute("email");

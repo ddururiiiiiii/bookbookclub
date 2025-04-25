@@ -9,6 +9,11 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.UUID;
 
+/**
+ * 프로필 이미지 저장/삭제를 처리하는 서비스
+ * - 저장: UUID + 원본 파일명 조합
+ * - 삭제: URL로부터 파일명을 추출해 삭제
+ */
 @Service
 @RequiredArgsConstructor
 public class ProfileImageService {
@@ -19,6 +24,12 @@ public class ProfileImageService {
     @Value("${custom.user.profile-image-upload-path}")
     private String uploadPath;
 
+    /**
+     * 프로필 이미지 저장
+     * - 확장자: image/* 인지 확인
+     * - 크기 제한: 5MB 이하
+     * - UUID 기반 저장
+     */
     public String store(MultipartFile file, Long userId) {
 
         // 확장자 검사
@@ -48,7 +59,10 @@ public class ProfileImageService {
         return BASE_URL + filename;
     }
 
-    // 기존 이미지 삭제 메서드 추가
+    /**
+     * 프로필 이미지 삭제
+     * - 기본 이미지가 아닌 경우만 삭제 시도
+     */
     public void delete(String imageUrl) {
         if (imageUrl == null || imageUrl.isBlank()) return;
 

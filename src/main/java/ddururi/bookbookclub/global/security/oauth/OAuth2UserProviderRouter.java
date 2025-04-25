@@ -9,6 +9,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+/**
+ * 소셜 로그인 Provider 라우팅 처리 클래스
+ * - registrationId 기준으로 서비스 선택
+ */
 @RequiredArgsConstructor
 @Service
 public class OAuth2UserProviderRouter implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
