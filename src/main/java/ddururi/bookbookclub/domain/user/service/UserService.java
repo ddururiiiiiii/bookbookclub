@@ -147,4 +147,18 @@ public class UserService {
         user.setProfileImageUrl(imageUrl);
     }
 
+    @Transactional
+    public void deleteProfileImage(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        // 기본 이미지가 아니라면 삭제 로직 수행 가능 (지금은 생략)
+        if (!user.getProfileImageUrl().equals(defaultProfileImageUrl)) {
+            // 나중에 실제 파일 삭제 로직 넣을 수 있음
+            // profileImageService.delete(user.getProfileImageUrl());
+        }
+
+        // 기본 이미지로 되돌림
+        user.setProfileImageUrl(defaultProfileImageUrl);
+    }
 }

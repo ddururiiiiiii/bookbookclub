@@ -1,7 +1,13 @@
 package ddururi.bookbookclub.global.exception;
 
+import lombok.Getter;
+
+@Getter
 public class RejoinRestrictionException extends RuntimeException {
+    private final ErrorCode errorCode;
+
     public RejoinRestrictionException() {
-        super("탈퇴 후 6개월 이내에는 재가입할 수 없습니다.");
+        super(ErrorCode.REJOIN_RESTRICTED.getMessage());
+        this.errorCode = ErrorCode.REJOIN_RESTRICTED;
     }
 }

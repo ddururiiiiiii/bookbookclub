@@ -13,6 +13,8 @@ public class UserResponse {
     private String email;
     private String nickname;
     private String role;
+    private String bio;
+    private String profileImageUrl;
 
     public static UserResponse from(User user) {
         return UserResponse.builder()
@@ -20,6 +22,8 @@ public class UserResponse {
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .role(user.getRole().name())
+                .bio(user.getBio())
+                .profileImageUrl(user.getProfileImageUrl())
                 .build();
     }
 }

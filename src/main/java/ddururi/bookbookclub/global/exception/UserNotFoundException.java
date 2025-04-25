@@ -1,7 +1,13 @@
 package ddururi.bookbookclub.global.exception;
 
+import lombok.Getter;
+
+@Getter
 public class UserNotFoundException extends RuntimeException {
+    private final ErrorCode errorCode;
+
     public UserNotFoundException() {
-        super("사용자를 찾을 수 없습니다.");
+        super(ErrorCode.USER_NOT_FOUND.getMessage());
+        this.errorCode = ErrorCode.USER_NOT_FOUND;
     }
 }

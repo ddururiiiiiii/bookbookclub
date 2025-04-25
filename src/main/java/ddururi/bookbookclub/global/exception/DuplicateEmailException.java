@@ -1,7 +1,13 @@
 package ddururi.bookbookclub.global.exception;
 
+import lombok.Getter;
+
+@Getter
 public class DuplicateEmailException extends RuntimeException {
+    private final ErrorCode errorCode;
+
     public DuplicateEmailException() {
-        super("이미 가입된 이메일입니다.");
+        super(ErrorCode.DUPLICATE_EMAIL.getMessage());
+        this.errorCode = ErrorCode.DUPLICATE_EMAIL;
     }
 }
