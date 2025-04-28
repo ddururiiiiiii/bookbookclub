@@ -118,3 +118,4 @@ src/main/java/ddururi/bookbookclub/
 - [#015 이메일 인증 실패 시도 횟수 제한 기능](https://ddururiiiiiii.tistory.com/623) 
 
 깃 브랜치 실습 중~
+이번엔 PR 실습중 ~
