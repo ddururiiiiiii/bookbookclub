@@ -117,4 +117,4 @@ src/main/java/ddururi/bookbookclub/
 - [#014 글로벌 예외처리 및 API 응답 포맷 통일](https://ddururiiiiiii.tistory.com/621)
 - [#015 이메일 인증 실패 시도 횟수 제한 기능](https://ddururiiiiiii.tistory.com/623) 
 
-- 브랜치 만들기 실습중 
+- 브랜치 만들기 실습 중
