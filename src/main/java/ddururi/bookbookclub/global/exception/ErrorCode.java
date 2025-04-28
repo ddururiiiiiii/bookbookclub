@@ -19,8 +19,9 @@ public enum ErrorCode {
     DUPLICATE_NICKNAME("DUPLICATE_NICKNAME", "이미 사용 중인 닉네임입니다."),
     EMAIL_VERIFICATION_TOO_MANY_ATTEMPTS("TOO_MANY_ATTEMPTS", "이메일 인증 시도 횟수를 초과했습니다. 잠시 후 다시 시도해주세요."),
     INVALID_EMAIL_VERIFICATION_TOKEN("INVALID_EMAIL_VERIFICATION_TOKEN", "인증 토큰이 유효하지 않습니다."),
-    INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "알 수 없는 서버 오류가 발생했습니다.");
+    INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "알 수 없는 서버 오류가 발생했습니다."),
 
+    FEED_NOT_FOUND("FEED_NOT_FOUND", "피드를 찾을 수 없습니다.");
 
     private final String code;
     private final String message;
