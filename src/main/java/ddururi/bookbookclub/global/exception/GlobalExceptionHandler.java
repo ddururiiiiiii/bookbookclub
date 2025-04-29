@@ -1,5 +1,8 @@
 package ddururi.bookbookclub.global.exception;
 
+import ddururi.bookbookclub.domain.emailverification.exception.EmailNotVerifiedException;
+import ddururi.bookbookclub.domain.emailverification.exception.EmailVerificationLimitExceededException;
+import ddururi.bookbookclub.domain.user.exception.*;
 import ddururi.bookbookclub.global.common.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,11 @@
 package ddururi.bookbookclub.domain.user.service;
 
 
+import ddururi.bookbookclub.domain.emailverification.exception.EmailNotVerifiedException;
 import ddururi.bookbookclub.domain.emailverification.service.EmailVerificationService;
 import ddururi.bookbookclub.domain.user.enums.UserStatus;
+import ddururi.bookbookclub.domain.user.exception.*;
 import ddururi.bookbookclub.domain.user.policy.UserPolicy;
-import ddururi.bookbookclub.global.exception.*;
 import ddururi.bookbookclub.domain.user.dto.UserLoginRequest;
 import ddururi.bookbookclub.domain.user.dto.UserResponse;
 import ddururi.bookbookclub.domain.user.dto.UserSignupRequest;

@@ -20,8 +20,9 @@ public enum ErrorCode {
     EMAIL_VERIFICATION_TOO_MANY_ATTEMPTS("TOO_MANY_ATTEMPTS", "이메일 인증 시도 횟수를 초과했습니다. 잠시 후 다시 시도해주세요."),
     INVALID_EMAIL_VERIFICATION_TOKEN("INVALID_EMAIL_VERIFICATION_TOKEN", "인증 토큰이 유효하지 않습니다."),
     INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "알 수 없는 서버 오류가 발생했습니다."),
-
-    FEED_NOT_FOUND("FEED_NOT_FOUND", "피드를 찾을 수 없습니다.");
+    FEED_NOT_FOUND("FEED_NOT_FOUND", "피드를 찾을 수 없습니다."),
+    ALREADY_LIKED("ALREADY_LIKED", "이미 좋아요를 누른 게시글입니다."),
+    LIKE_NOT_FOUND("LIKE_NOT_FOUND", "좋아요 기록이 존재하지 않습니다.");
 
     private final String code;
     private final String message;

@@ -4,7 +4,7 @@ import ddururi.bookbookclub.domain.feed.dto.FeedResponse;
 import ddururi.bookbookclub.domain.feed.entity.Feed;
 import ddururi.bookbookclub.domain.feed.repository.FeedRepository;
 import ddururi.bookbookclub.domain.user.entity.User;
-import ddururi.bookbookclub.global.exception.FeedNotFoundException;
+import ddururi.bookbookclub.domain.feed.exception.FeedNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

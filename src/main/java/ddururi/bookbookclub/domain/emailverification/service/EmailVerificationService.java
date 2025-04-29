@@ -2,8 +2,8 @@ package ddururi.bookbookclub.domain.emailverification.service;
 
 import ddururi.bookbookclub.domain.emailverification.entity.EmailVerification;
 import ddururi.bookbookclub.domain.emailverification.repository.EmailVerificationRepository;
-import ddururi.bookbookclub.global.exception.EmailVerificationLimitExceededException;
-import ddururi.bookbookclub.global.exception.InvalidTokenException;
+import ddururi.bookbookclub.domain.emailverification.exception.EmailVerificationLimitExceededException;
+import ddururi.bookbookclub.domain.user.exception.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;

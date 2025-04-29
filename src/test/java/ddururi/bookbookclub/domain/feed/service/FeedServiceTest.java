@@ -4,7 +4,7 @@ import ddururi.bookbookclub.domain.feed.dto.FeedResponse;
 import ddururi.bookbookclub.domain.feed.entity.Feed;
 import ddururi.bookbookclub.domain.feed.repository.FeedRepository;
 import ddururi.bookbookclub.domain.user.entity.User;
-import ddururi.bookbookclub.global.exception.FeedNotFoundException;
+import ddururi.bookbookclub.domain.feed.exception.FeedNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

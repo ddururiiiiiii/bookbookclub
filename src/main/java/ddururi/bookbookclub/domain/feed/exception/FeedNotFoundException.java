@@ -1,5 +1,6 @@
-package ddururi.bookbookclub.global.exception;
+package ddururi.bookbookclub.domain.feed.exception;
 
+import ddururi.bookbookclub.global.exception.ErrorCode;
 import lombok.Getter;
 
 /**
