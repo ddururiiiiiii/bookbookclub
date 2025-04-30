@@ -5,11 +5,15 @@ import ddururi.bookbookclub.domain.feed.repository.FeedRepository;
 import ddururi.bookbookclub.domain.like.entity.Like;
 import ddururi.bookbookclub.domain.like.exception.LikeException;
 import ddururi.bookbookclub.domain.like.repository.LikeRepository;
+import ddururi.bookbookclub.domain.user.dto.UserSummaryResponse;
 import ddururi.bookbookclub.domain.user.entity.User;
 import ddururi.bookbookclub.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 좋아요(Like) 관련 비즈니스 로직 처리 서비스
@@ -88,5 +92,18 @@ public class LikeService {
      */
     public boolean hasUserLiked(Long userId, Long feedId) {
         return likeRepository.existsByUserIdAndFeedId(userId, feedId);
+    }
+
+    /**
+     * 특정 피드를 좋아요한 사용자 목록 조회
+     *
+     * @param feedId 피드 ID
+     * @return 해당 피드를 좋아요한 사용자들의 요약 정보 리스트
+     */
+    @Transactional(readOnly = true)
+    public List<UserSummaryResponse> getUsersWhoLikedFeed(Long feedId) {
+        return likeRepository.findAllByFeedId(feedId).stream()
+                .map(like -> new UserSummaryResponse(like.getUser()))
+                .collect(Collectors.toList());
     }
 }
