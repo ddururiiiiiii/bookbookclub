@@ -135,7 +135,3 @@ src/main/java/ddururi/bookbookclub/
 - [#023 댓글(Comment) API 구현 및 테스트](https://ddururiiiiiii.tistory.com/645)
 - [#024 JWT 토큰이 없는데도 200 OK 가 뜬다? (해결방법)](https://ddururiiiiiii.tistory.com/646)
 
-
-  깃 충돌 테스트 중~
-  깃 충돌 테스트 중~2
-    깃 충돌 테스트 중~3
