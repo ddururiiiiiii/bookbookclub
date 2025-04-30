@@ -14,6 +14,7 @@ public class UserSummaryResponse {
     private final String nickname;
     private final String profileImageUrl;
 
+
     public UserSummaryResponse(User user) {
         this.id = user.getId();
         this.nickname = user.getNickname();
