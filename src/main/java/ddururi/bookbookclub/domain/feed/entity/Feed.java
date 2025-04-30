@@ -1,5 +1,6 @@
 package ddururi.bookbookclub.domain.feed.entity;
 
+import ddururi.bookbookclub.domain.book.entity.Book;
 import ddururi.bookbookclub.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 
 /**
@@ -32,6 +32,11 @@ public class Feed {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    /** 책 정보 */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+
     /** 피드 내용 */
     @Column(nullable = false, length = 1000)
     private String content;
@@ -49,9 +54,10 @@ public class Feed {
     /**
      * 피드 생성 정적 메서드
      */
-    public static Feed create(User user, String content) {
+    public static Feed create(User user, Book book, String content) {
         Feed feed = new Feed();
         feed.user = user;
+        feed.book = book;
         feed.content = content;
         return feed;
     }

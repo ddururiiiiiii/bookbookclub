@@ -2,6 +2,7 @@ package ddururi.bookbookclub.domain.feed.controller;
 
 import ddururi.bookbookclub.domain.feed.dto.FeedRequest;
 import ddururi.bookbookclub.domain.feed.dto.FeedResponse;
+import ddururi.bookbookclub.domain.feed.dto.FeedUpdateRequest;
 import ddururi.bookbookclub.domain.feed.entity.Feed;
 import ddururi.bookbookclub.domain.feed.service.FeedService;
 import ddururi.bookbookclub.global.common.ApiResponse;
@@ -36,9 +37,10 @@ public class FeedController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody @Valid FeedRequest request
     ) {
-        Feed feed = feedService.createFeed(userDetails.getUser(), request.getContent());
-        return ResponseEntity.ok(ApiResponse.success(new FeedResponse(feed)));
+        Feed feed = feedService.createFeed(userDetails.getUser(), request);
+        return ResponseEntity.ok(ApiResponse.success(new FeedResponse(feed, 0L, false)));
     }
+
 
     /**
      * 피드 수정
@@ -49,10 +51,10 @@ public class FeedController {
     @PutMapping("/{feedId}")
     public ResponseEntity<ApiResponse<FeedResponse>> updateFeed(
             @PathVariable Long feedId,
-            @RequestBody @Valid FeedRequest request
+            @RequestBody @Valid FeedUpdateRequest request
     ) {
         Feed feed = feedService.updateFeed(feedId, request.getContent());
-        return ResponseEntity.ok(ApiResponse.success(new FeedResponse(feed)));
+        return ResponseEntity.ok(ApiResponse.success(new FeedResponse(feed, 0L, false)));
     }
 
     /**
@@ -66,25 +68,32 @@ public class FeedController {
     }
 
     /**
-     * 피드 단건 조회
+     * 피드 단건 조회 (좋아요 수, 좋아요 여부 포함)
      * @param feedId 조회할 피드 ID
+     * @param userDetails 현재 로그인한 사용자 정보
      * @return 조회된 피드 정보
      */
     @GetMapping("/{feedId}")
-    public ResponseEntity<ApiResponse<FeedResponse>> getFeed(@PathVariable Long feedId) {
-        Feed feed = feedService.getFeed(feedId);
-        return ResponseEntity.ok(ApiResponse.success(new FeedResponse(feed)));
+    public ResponseEntity<ApiResponse<FeedResponse>> getFeed(
+            @PathVariable Long feedId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        FeedResponse feedResponse = feedService.getFeed(feedId, userDetails.getUser().getId());
+        return ResponseEntity.ok(ApiResponse.success(feedResponse));
     }
 
     /**
-     * 피드 목록 조회 (페이징, 최신순)
+     * 피드 목록 조회 (페이징, 좋아요 수, 좋아요 여부 포함)
      * @param pageable 페이징 요청 정보
+     * @param userDetails 현재 로그인한 사용자 정보
      * @return 피드 목록 (페이지 포함)
      */
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<FeedResponse>>> getFeeds(Pageable pageable) {
-        Page<FeedResponse> feeds = feedService.getFeeds(pageable);
+    public ResponseEntity<ApiResponse<Page<FeedResponse>>> getFeeds(
+            Pageable pageable,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        Page<FeedResponse> feeds = feedService.getFeeds(pageable, userDetails.getUser().getId());
         return ResponseEntity.ok(ApiResponse.success(feeds));
     }
-
 }

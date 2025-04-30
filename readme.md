@@ -100,7 +100,7 @@ src/main/java/ddururi/bookbookclub/
 ## 📕 개발일지
 ** 링크를 클릭하면 개발일지를 작성한 블로그로 이동 됩니다.
 
-### [회원(로그인/회원가입)]
+### 회원 (로그인/회원가입/로그아웃)
 - [#000 프로젝트 생성 (프로젝트 생성, MySQL 연결, 개발 편의 설정, 패키지 설정 등)](https://ddururiiiiiii.tistory.com/598)
 - [#001 회원 도메인(User) 개발](https://ddururiiiiiii.tistory.com/604)
 - [#002 회원(User) 도메인 단위 테스트](https://ddururiiiiiii.tistory.com/605)
@@ -118,14 +118,19 @@ src/main/java/ddururi/bookbookclub/
 - [#014 글로벌 예외처리 및 API 응답 포맷 통일](https://ddururiiiiiii.tistory.com/621)
 - [#015 이메일 인증 실패 시도 횟수 제한 기능](https://ddururiiiiiii.tistory.com/623)
 
+### 책(Book)
+- [#016 북(Book) 도메인 개발 및 단위 테스트](https://ddururiiiiiii.tistory.com/637)
+- [#017 북(Book) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/639)
 
-### [피드(Feed)]
-- [#016 피드(Feed) 도메인 개발
-  ](https://ddururiiiiiii.tistory.com/628)
-- [#017 피드(Feed) 도메인 단위 테스트](https://ddururiiiiiii.tistory.com/630)
-- [#018 피드(Feed) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/631)
+### 피드(Feed)
+- [#018 피드(Feed) 도메인 개발 및 단위테스트](https://ddururiiiiiii.tistory.com/640)
+- [#019 피드(Feed) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/641)
 
-### [좋아요(Like)]
-- [#019 좋아요(Like) 도메인 개발](https://ddururiiiiiii.tistory.com/632)
-- [#020 좋아요(Like) 도메인 단위 테스트](https://ddururiiiiiii.tistory.com/633)
-- [#021 좋아요(Like) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/634)
+### 좋아요(Like)
+- [#020 좋아요(Like) 도메인 개발 및 단위테스트](https://ddururiiiiiii.tistory.com/642)
+- [#021 좋아요(Like) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/643)
+
+### 댓글(Comment)
+- [#022 댓글(Comment) 도메인 구현 및 단위테스트](https://ddururiiiiiii.tistory.com/644)
+- [#023 댓글(Comment) API 구현 및 테스트](https://ddururiiiiiii.tistory.com/645)
+- [#024 JWT 토큰이 없는데도 200 OK 가 뜬다? (해결방법)](https://ddururiiiiiii.tistory.com/646)

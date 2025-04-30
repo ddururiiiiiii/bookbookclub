@@ -21,6 +21,7 @@ import java.io.IOException;
  * JWT 기반 인증 필터
  * - 매 요청마다 JWT 유효성 검사 및 사용자 인증 처리
  * - 블랙리스트 체크 포함
+ * - 인증 실패 시 401 Unauthorized 응답 반환
  */
 @Component
 @RequiredArgsConstructor
@@ -33,39 +34,54 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        // 1. Authorization 헤더에서 Bearer 토큰 추출
-        // 2. 블랙리스트에 등록된 토큰이면 인증 실패
-        // 3. 유효한 토큰이면 사용자 정보 로드 후 SecurityContext에 등록
 
-        // Authorization 헤더에서 토큰 추출
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-
-            // 블랙리스트 확인
-            if (blacklistService.isBlacklisted(token)) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                return;
-            }
-
-            if (jwtUtil.validateToken(token)) {
-                String email = jwtUtil.getEmailFromToken(token);
-
-                User user = userRepository.findByEmail(email)
-                        .orElse(null); // 탈퇴하거나 삭제된 유저면 인증 안 함
-
-                if (user != null) {
-                    CustomUserDetails customUserDetails = new CustomUserDetails(user);
-
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            }
+        // Authorization 헤더 없음 or 잘못된 형식
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            reject(response, "Missing or invalid Authorization header");
+            return;
         }
 
+        String token = authHeader.substring(7);
+
+        // 블랙리스트 확인
+        if (blacklistService.isBlacklisted(token)) {
+            reject(response, "Token is blacklisted");
+            return;
+        }
+
+        // 토큰 유효성 검사
+        if (!jwtUtil.validateToken(token)) {
+            reject(response, "Invalid or expired token");
+            return;
+        }
+
+        // 사용자 조회
+        String email = jwtUtil.getEmailFromToken(token);
+        User user = userRepository.findByEmail(email).orElse(null);
+
+        if (user == null) {
+            reject(response, "User not found");
+            return;
+        }
+
+        // 인증 객체 생성 및 등록
+        CustomUserDetails customUserDetails = new CustomUserDetails(user);
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         filterChain.doFilter(request, response);
+    }
+
+    /**
+     * 인증 실패 시 401 Unauthorized 응답 반환
+     */
+    private void reject(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write("{\"success\":false,\"code\":\"UNAUTHORIZED\",\"message\":\"" + message + "\"}");
     }
 }

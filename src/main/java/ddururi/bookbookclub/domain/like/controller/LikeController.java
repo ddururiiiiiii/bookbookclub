@@ -20,28 +20,20 @@ public class LikeController {
     private final LikeService likeService;
 
     /**
-     * 피드 좋아요
-     * @param feedId 좋아요할 피드 ID
+     * 좋아요 토글 API
+     * - 이미 좋아요가 되어 있으면 좋아요를 취소
+     * - 좋아요가 안 되어 있으면 좋아요 추가
+     *
+     * @param feedId 좋아요를 토글할 피드 ID
      * @param userDetails 인증된 사용자 정보
+     * @return 좋아요 상태에 따른 메시지 응답
      */
     @PostMapping("/{feedId}/likes")
-    public ResponseEntity<ApiResponse<Void>> like(@PathVariable Long feedId,
-                                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse<String>> toggleLike(@PathVariable Long feedId,
+                                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
-        likeService.likeFeed(user, feedId);
-        return ResponseEntity.ok(ApiResponse.success(null, "좋아요를 눌렀습니다."));
-    }
-
-    /**
-     * 피드 좋아요 취소
-     * @param feedId 좋아요 취소할 피드 ID
-     * @param userDetails 인증된 사용자 정보
-     */
-    @DeleteMapping("/{feedId}/likes")
-    public ResponseEntity<ApiResponse<Void>> unlike(@PathVariable Long feedId,
-                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
-        User user = userDetails.getUser();
-        likeService.unlikeFeed(user, feedId);
-        return ResponseEntity.ok(ApiResponse.success(null, "좋아요를 취소했습니다."));
+        boolean liked = likeService.toggleLike(user, feedId);
+        String message = liked ? "좋아요를 눌렀습니다." : "좋아요를 취소했습니다.";
+        return ResponseEntity.ok(ApiResponse.success(message));
     }
 }

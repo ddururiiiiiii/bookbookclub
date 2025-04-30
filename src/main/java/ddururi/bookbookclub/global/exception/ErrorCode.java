@@ -22,7 +22,9 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "알 수 없는 서버 오류가 발생했습니다."),
     FEED_NOT_FOUND("FEED_NOT_FOUND", "피드를 찾을 수 없습니다."),
     ALREADY_LIKED("ALREADY_LIKED", "이미 좋아요를 누른 게시글입니다."),
-    LIKE_NOT_FOUND("LIKE_NOT_FOUND", "좋아요 기록이 존재하지 않습니다.");
+    LIKE_NOT_FOUND("LIKE_NOT_FOUND", "좋아요 기록이 존재하지 않습니다."),
+    COMMENT_NOT_FOUND("C001", "댓글을 찾을 수 없습니다."),
+    COMMENT_ACCESS_DENIED("C002", "본인이 작성한 댓글만 삭제할 수 있습니다.");
 
     private final String code;
     private final String message;

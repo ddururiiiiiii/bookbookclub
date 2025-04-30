@@ -1,7 +1,11 @@
 package ddururi.bookbookclub.global.exception;
 
+import ddururi.bookbookclub.domain.comment.exception.CommentAccessDeniedException;
+import ddururi.bookbookclub.domain.comment.exception.CommentNotFoundException;
 import ddururi.bookbookclub.domain.emailverification.exception.EmailNotVerifiedException;
 import ddururi.bookbookclub.domain.emailverification.exception.EmailVerificationLimitExceededException;
+import ddururi.bookbookclub.domain.feed.exception.FeedNotFoundException;
+import ddururi.bookbookclub.domain.like.exception.LikeException;
 import ddururi.bookbookclub.domain.user.exception.*;
 import ddururi.bookbookclub.global.common.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -41,12 +45,6 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.fail(e.getErrorCode()));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<?>> handleAllException(Exception ex) {
-        ex.printStackTrace(); // 운영 환경에서는 로거로 처리
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR));
-    }
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleUserNotFound(UserNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -76,4 +74,37 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS) // 429
                 .body(ApiResponse.fail(e.getErrorCode()));
     }
+
+    @ExceptionHandler(FeedNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFeedNotFound(FeedNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(LikeException.class)
+    public ResponseEntity<ApiResponse<Void>> handleLikeException(LikeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCommentNotFound(CommentNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(CommentAccessDeniedException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCommentAccessDenied(CommentAccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<?>> handleAllException(Exception ex) {
+        ex.printStackTrace(); // 운영환경에서는 로거로 변경
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
+
+
 }

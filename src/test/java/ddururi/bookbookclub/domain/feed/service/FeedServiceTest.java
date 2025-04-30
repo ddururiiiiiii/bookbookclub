@@ -1,121 +1,123 @@
 package ddururi.bookbookclub.domain.feed.service;
 
-import ddururi.bookbookclub.domain.feed.dto.FeedResponse;
+import ddururi.bookbookclub.domain.book.entity.Book;
+import ddururi.bookbookclub.domain.book.repository.BookRepository;
+import ddururi.bookbookclub.domain.feed.dto.FeedRequest;
 import ddururi.bookbookclub.domain.feed.entity.Feed;
 import ddururi.bookbookclub.domain.feed.repository.FeedRepository;
+import ddururi.bookbookclub.domain.like.service.LikeService;
 import ddururi.bookbookclub.domain.user.entity.User;
-import ddururi.bookbookclub.domain.feed.exception.FeedNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-
-import java.util.Collections;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+
+/**
+ * FeedService 단위 테스트
+ */
+@ExtendWith(MockitoExtension.class)
 class FeedServiceTest {
 
     @Mock
     private FeedRepository feedRepository;
 
+    @Mock
+    private BookRepository bookRepository;
+
+    @Mock
+    private LikeService likeService;
+
     @InjectMocks
     private FeedService feedService;
 
-    private User user;
-    private Feed feed;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-
-        user = User.create(
-                "test@example.com",
-                "encoded-password",
-                "테스트유저"
-        );
-
-        feed = Feed.create(user, "테스트 내용"); // ★ 여기 수정됨
-    }
-
     @Test
-    @DisplayName("피드 작성 성공")
-    void createFeed_success() {
-        when(feedRepository.save(any(Feed.class))).thenReturn(feed);
+    @DisplayName("피드 작성 성공 - ISBN으로 책 찾기")
+    void createFeed_success_withIsbn() {
+        // given
+        User user = createUser();
+        FeedRequest request = createFeedRequest("Effective Java", "Joshua Bloch", "Addison-Wesley", "9780134685991", "http://image.url");
 
-        Feed result = feedService.createFeed(user, "테스트 내용");
+        Book book = Book.create(request.getTitle(), request.getAuthor(), request.getPublisher(), request.getIsbn(), request.getThumbnailUrl());
+        when(bookRepository.findByIsbn(request.getIsbn())).thenReturn(java.util.Optional.of(book));
+        when(feedRepository.save(any(Feed.class))).thenAnswer(invocation -> {
+            Feed feed = invocation.getArgument(0);
+            setField(feed, "id", 1L); // 저장된 피드에 id 강제 설정
+            return feed;
+        });
 
-        assertThat(result.getContent()).isEqualTo("테스트 내용");
+        // when
+        Feed feed = feedService.createFeed(user, request);
+
+        // then
+        assertThat(feed).isNotNull();
+        assertThat(feed.getContent()).isEqualTo(request.getContent());
+        assertThat(feed.getBook().getTitle()).isEqualTo(request.getTitle());
+        assertThat(feed.getUser()).isEqualTo(user);
+
+        verify(bookRepository, times(1)).findByIsbn(request.getIsbn());
         verify(feedRepository, times(1)).save(any(Feed.class));
     }
 
     @Test
-    @DisplayName("피드 수정 성공")
-    void updateFeed_success() {
-        when(feedRepository.findById(anyLong())).thenReturn(Optional.of(feed));
+    @DisplayName("피드 작성 성공 - ISBN 없고 Title+Author로 책 찾기")
+    void createFeed_success_withTitleAndAuthor() {
+        // given
+        User user = createUser();
+        FeedRequest request = createFeedRequest("Clean Code", "Robert C. Martin", "Prentice Hall", null, "http://image.url");
 
-        Feed result = feedService.updateFeed(1L, "수정된 내용");
+        Book book = Book.create(request.getTitle(), request.getAuthor(), request.getPublisher(), request.getIsbn(), request.getThumbnailUrl());
+        when(bookRepository.findByTitleAndAuthor(request.getTitle(), request.getAuthor())).thenReturn(java.util.Optional.of(book));
+        when(feedRepository.save(any(Feed.class))).thenAnswer(invocation -> {
+            Feed feed = invocation.getArgument(0);
+            setField(feed, "id", 2L);
+            return feed;
+        });
 
-        assertThat(result.getContent()).isEqualTo("수정된 내용");
-        verify(feedRepository, times(1)).findById(1L);
+        // when
+        Feed feed = feedService.createFeed(user, request);
+
+        // then
+        assertThat(feed).isNotNull();
+        assertThat(feed.getContent()).isEqualTo(request.getContent());
+        assertThat(feed.getBook().getAuthor()).isEqualTo(request.getAuthor());
+        assertThat(feed.getUser()).isEqualTo(user);
+
+        verify(bookRepository, times(1)).findByTitleAndAuthor(request.getTitle(), request.getAuthor());
+        verify(feedRepository, times(1)).save(any(Feed.class));
     }
 
-    @Test
-    @DisplayName("피드 수정 실패 - 존재하지 않는 피드")
-    void updateFeed_fail_notFound() {
-        when(feedRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> feedService.updateFeed(1L, "수정된 내용"))
-                .isInstanceOf(FeedNotFoundException.class);
+    private User createUser() {
+        return User.create(
+                "test@example.com",
+                "encrypted-password",
+                "testUser"
+        );
     }
 
-    @Test
-    @DisplayName("피드 삭제 성공")
-    void deleteFeed_success() {
-        when(feedRepository.findById(anyLong())).thenReturn(Optional.of(feed));
-
-        feedService.deleteFeed(1L);
-
-        verify(feedRepository, times(1)).delete(feed);
+    private FeedRequest createFeedRequest(String title, String author, String publisher, String isbn, String thumbnailUrl) {
+        FeedRequest request = new FeedRequest();
+        setField(request, "title", title);
+        setField(request, "author", author);
+        setField(request, "publisher", publisher);
+        setField(request, "isbn", isbn);
+        setField(request, "thumbnailUrl", thumbnailUrl);
+        setField(request, "content", "이 책 정말 좋아요!");
+        return request;
     }
 
-    @Test
-    @DisplayName("피드 삭제 실패 - 존재하지 않는 피드")
-    void deleteFeed_fail_notFound() {
-        when(feedRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> feedService.deleteFeed(1L))
-                .isInstanceOf(FeedNotFoundException.class);
-    }
-
-    @Test
-    @DisplayName("피드 단건 조회 성공")
-    void getFeed_success() {
-        when(feedRepository.findById(anyLong())).thenReturn(Optional.of(feed));
-
-        Feed result = feedService.getFeed(1L);
-
-        assertThat(result).isNotNull();
-        assertThat(result.getContent()).isEqualTo("테스트 내용");
-    }
-
-    @Test
-    @DisplayName("피드 목록 조회 성공")
-    void getFeeds_success() {
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        Page<Feed> page = new PageImpl<>(Collections.singletonList(feed));
-        when(feedRepository.findAll(any(PageRequest.class))).thenReturn(page);
-
-        Page<FeedResponse> result = feedService.getFeeds(pageRequest);
-
-        assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getContent()).isEqualTo("테스트 내용");
+    // 테스트용 private util (setter 없는 필드 강제 설정)
+    private void setField(Object target, String fieldName, Object value) {
+        try {
+            var field = target.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(target, value);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

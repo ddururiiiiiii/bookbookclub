@@ -10,12 +10,22 @@ public class FeedResponse {
 
     private final Long id;
     private final String content;
+    private final long likeCount;
+    private final boolean liked;
+    private final String bookTitle;
+    private final String bookAuthor;
+    private final String bookThumbnailUrl;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public FeedResponse(Feed feed) {
+    public FeedResponse(Feed feed, long likeCount, boolean liked) {
         this.id = feed.getId();
         this.content = feed.getContent();
+        this.likeCount = likeCount;
+        this.liked = liked;
+        this.bookTitle = feed.getBook().getTitle();
+        this.bookAuthor = feed.getBook().getAuthor();
+        this.bookThumbnailUrl = feed.getBook().getThumbnailUrl();
         this.createdAt = feed.getCreatedAt();
         this.updatedAt = feed.getUpdatedAt();
     }
