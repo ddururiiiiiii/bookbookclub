@@ -5,6 +5,7 @@ import ddururi.bookbookclub.domain.feed.dto.FeedResponse;
 import ddururi.bookbookclub.domain.feed.dto.FeedUpdateRequest;
 import ddururi.bookbookclub.domain.feed.entity.Feed;
 import ddururi.bookbookclub.domain.feed.service.FeedService;
+import ddururi.bookbookclub.domain.feed.service.RankingFeedService;
 import ddururi.bookbookclub.global.common.ApiResponse;
 import ddururi.bookbookclub.global.security.CustomUserDetails;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class FeedController {
 
     private final FeedService feedService;
+    private final RankingFeedService rankingFeedService;
 
     /**
      * 피드 작성
@@ -96,4 +98,18 @@ public class FeedController {
         Page<FeedResponse> feeds = feedService.getFeeds(pageable, userDetails.getUser().getId());
         return ResponseEntity.ok(ApiResponse.success(feeds));
     }
+
+    /**
+     * 좋아요 랭킹 조회 API
+     * @param period weekly, monthly, yearly, total
+     * @param topN 가져올 피드 수 (기본값 10)
+     * @return 좋아요 TOP N 피드 ID 리스트
+     */
+    @GetMapping("/popular/like")
+    public ApiResponse<?> getPopularByLike(
+            @RequestParam String period,
+            @RequestParam(defaultValue = "10") int topN) {
+        return ApiResponse.success(rankingFeedService.getTopLikedFeeds(period, topN));
+    }
+
 }

@@ -2,6 +2,7 @@ package ddururi.bookbookclub.domain.like.service;
 
 import ddururi.bookbookclub.domain.feed.entity.Feed;
 import ddururi.bookbookclub.domain.feed.repository.FeedRepository;
+import ddururi.bookbookclub.domain.feed.service.RankingFeedService;
 import ddururi.bookbookclub.domain.like.entity.Like;
 import ddururi.bookbookclub.domain.like.exception.LikeException;
 import ddururi.bookbookclub.domain.like.repository.LikeRepository;
@@ -25,6 +26,7 @@ public class LikeService {
 
     private final LikeRepository likeRepository;
     private final FeedRepository feedRepository;
+    private final RankingFeedService rankingFeedService;
 
     /**
      * 좋아요 토글 기능
@@ -45,10 +47,20 @@ public class LikeService {
         return likeRepository.findByUserIdAndFeedId(user.getId(), feedId)
                 .map(existingLike -> {
                     likeRepository.delete(existingLike);
+                    // Redis 좋아요 카운트 -1
+                    rankingFeedService.incrementLike("weekly", feedId, -1);
+                    rankingFeedService.incrementLike("monthly", feedId, -1);
+                    rankingFeedService.incrementLike("yearly", feedId, -1);
+                    rankingFeedService.incrementLike("total", feedId, -1);
                     return false;
                 })
                 .orElseGet(() -> {
                     likeRepository.save(Like.create(user, feed));
+                    // Redis 좋아요 카운트 +1
+                    rankingFeedService.incrementLike("weekly", feedId, 1);
+                    rankingFeedService.incrementLike("monthly", feedId, 1);
+                    rankingFeedService.incrementLike("yearly", feedId, 1);
+                    rankingFeedService.incrementLike("total", feedId, 1);
                     return true;
                 });
     }
