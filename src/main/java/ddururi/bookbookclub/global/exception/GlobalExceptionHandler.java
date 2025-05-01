@@ -4,8 +4,10 @@ import ddururi.bookbookclub.domain.comment.exception.CommentAccessDeniedExceptio
 import ddururi.bookbookclub.domain.comment.exception.CommentNotFoundException;
 import ddururi.bookbookclub.domain.emailverification.exception.EmailNotVerifiedException;
 import ddururi.bookbookclub.domain.emailverification.exception.EmailVerificationLimitExceededException;
+import ddururi.bookbookclub.domain.feed.exception.FeedBlindedException;
 import ddururi.bookbookclub.domain.feed.exception.FeedNotFoundException;
 import ddururi.bookbookclub.domain.like.exception.LikeException;
+import ddururi.bookbookclub.domain.report.exception.AlreadyReportedException;
 import ddururi.bookbookclub.domain.user.exception.*;
 import ddururi.bookbookclub.global.common.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -99,12 +101,24 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.fail(e.getErrorCode()));
     }
 
+    @ExceptionHandler(AlreadyReportedException.class)
+    public ResponseEntity<ApiResponse<?>> handleAlreadyReportedException(AlreadyReportedException ex) {
+        return ResponseEntity
+                .badRequest()
+                .body(ApiResponse.fail(ErrorCode.ALREADY_REPORTED));
+    }
+
+    @ExceptionHandler(FeedBlindedException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFeedBlinded(FeedBlindedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> handleAllException(Exception ex) {
         ex.printStackTrace(); // 운영환경에서는 로거로 변경
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR));
     }
-
 
 }

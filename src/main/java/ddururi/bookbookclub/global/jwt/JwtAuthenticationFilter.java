@@ -37,9 +37,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // Authorization 헤더 없음 or 잘못된 형식
+        // Authorization 헤더 없음 or 잘못된 형식 → 그냥 다음 필터로 넘김
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            reject(response, "Missing or invalid Authorization header");
+            filterChain.doFilter(request, response);
             return;
         }
 

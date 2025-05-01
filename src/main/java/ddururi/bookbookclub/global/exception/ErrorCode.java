@@ -23,8 +23,10 @@ public enum ErrorCode {
     FEED_NOT_FOUND("FEED_NOT_FOUND", "피드를 찾을 수 없습니다."),
     ALREADY_LIKED("ALREADY_LIKED", "이미 좋아요를 누른 게시글입니다."),
     LIKE_NOT_FOUND("LIKE_NOT_FOUND", "좋아요 기록이 존재하지 않습니다."),
-    COMMENT_NOT_FOUND("C001", "댓글을 찾을 수 없습니다."),
-    COMMENT_ACCESS_DENIED("C002", "본인이 작성한 댓글만 삭제할 수 있습니다.");
+    COMMENT_NOT_FOUND("COMMENT_NOT_FOUND", "댓글을 찾을 수 없습니다."),
+    COMMENT_ACCESS_DENIED("COMMENT_ACCESS_DENIED", "본인이 작성한 댓글만 삭제할 수 있습니다."),
+    FEED_BLINDED("FEED_BLINDED", "블라인드 처리된 게시글입니다."),
+    ALREADY_REPORTED("ALREADY_REPORTED", "이미 신고한 피드입니다.");
 
     private final String code;
     private final String message;

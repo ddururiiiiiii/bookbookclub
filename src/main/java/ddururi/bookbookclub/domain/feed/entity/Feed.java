@@ -41,6 +41,10 @@ public class Feed {
     @Column(nullable = false, length = 1000)
     private String content;
 
+    /** 블라인드 여부 */
+    @Column(nullable = false)
+    private boolean isBlinded = false;
+
     /** 작성일 */
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -50,6 +54,16 @@ public class Feed {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    /** 피드 블라인드 처리 */
+    public void blind() {
+        this.isBlinded = true;
+    }
+
+    /** 블라인드 해제 */
+    public void unblind() {
+        this.isBlinded = false;
+    }
 
     /**
      * 피드 생성 정적 메서드

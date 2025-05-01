@@ -5,6 +5,7 @@ import ddururi.bookbookclub.domain.book.repository.BookRepository;
 import ddururi.bookbookclub.domain.feed.dto.FeedRequest;
 import ddururi.bookbookclub.domain.feed.dto.FeedResponse;
 import ddururi.bookbookclub.domain.feed.entity.Feed;
+import ddururi.bookbookclub.domain.feed.exception.FeedBlindedException;
 import ddururi.bookbookclub.domain.feed.repository.FeedRepository;
 import ddururi.bookbookclub.domain.like.service.LikeService;
 import ddururi.bookbookclub.domain.user.entity.User;
@@ -107,6 +108,11 @@ public class FeedService {
     public FeedResponse getFeed(Long feedId, Long userId) {
         Feed feed = feedRepository.findById(feedId)
                 .orElseThrow(FeedNotFoundException::new);
+
+        if (feed.isBlinded()) {
+            throw new FeedBlindedException();
+        }
+
         long likeCount = likeService.getLikeCount(feedId);
         boolean liked = likeService.hasUserLiked(userId, feedId);
         return new FeedResponse(feed, likeCount, liked);
@@ -126,12 +132,12 @@ public class FeedService {
                 pageable.getPageSize(),
                 Sort.by(Sort.Direction.DESC, "createdAt")
         );
+        Page<Feed> feeds = feedRepository.findByIsBlindedFalse(sortedPageable);
 
-        return feedRepository.findAll(sortedPageable)
-                .map(feed -> {
-                    long likeCount = likeService.getLikeCount(feed.getId());
-                    boolean liked = likeService.hasUserLiked(userId, feed.getId());
-                    return new FeedResponse(feed, likeCount, liked);
-                });
+        return feeds.map(feed -> {
+            long likeCount = likeService.getLikeCount(feed.getId());
+            boolean liked = likeService.hasUserLiked(userId, feed.getId());
+            return new FeedResponse(feed, likeCount, liked);
+        });
     }
 }
