@@ -121,19 +121,26 @@ src/main/java/ddururi/bookbookclub/
 ### 책(Book)
 - [#016 북(Book) 도메인 개발 및 단위 테스트](https://ddururiiiiiii.tistory.com/637)
 - [#017 북(Book) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/639)
+- [#029 책(Book) - Spring WebClient로 외부 API 연동: KakaoBookClient 구현](https://ddururiiiiiii.tistory.com/653)
+- [#032 책(Book) 중복 등록 시 예외 처리 하기](https://ddururiiiiiii.tistory.com/658)
 
 ### 피드(Feed)
 - [#018 피드(Feed) 도메인 개발 및 단위테스트](https://ddururiiiiiii.tistory.com/640)
 - [#019 피드(Feed) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/641)
+- [#026 신고(Report) 도메인 구현 및 단위테스트](https://ddururiiiiiii.tistory.com/650)
+- [#027 신고(Report) 누적 시, 블라인드 처리](https://ddururiiiiiii.tistory.com/651)
+- [#028 좋아요 순 피드 조회 (주간/월간/연간/누적)](https://ddururiiiiiii.tistory.com/652)
+- [#030 좋아요(Like) 랭킹에서 피드 상세정보 함께 내려주기](https://ddururiiiiiii.tistory.com/654)
+- [#031 피드 검색 조회](https://ddururiiiiiii.tistory.com/656)
+- [#032 각종 피드 조회 (특정 회원의 피드 목록 조회, 특정 회원이 좋아요 누른 피드 목록 조회)](https://ddururiiiiiii.tistory.com/657)
 
 ### 좋아요(Like)
 - [#020 좋아요(Like) 도메인 개발 및 단위테스트](https://ddururiiiiiii.tistory.com/642)
 - [#021 좋아요(Like) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/643)
+- [#025 좋아요(Like) 토글 기능으로 변경하기](https://ddururiiiiiii.tistory.com/648)
 
 ### 댓글(Comment)
 - [#022 댓글(Comment) 도메인 구현 및 단위테스트](https://ddururiiiiiii.tistory.com/644)
 - [#023 댓글(Comment) API 구현 및 테스트](https://ddururiiiiiii.tistory.com/645)
 - [#024 JWT 토큰이 없는데도 200 OK 가 뜬다? (해결방법)](https://ddururiiiiiii.tistory.com/646)
 
-깃 테스트1
-깃 테스트2
