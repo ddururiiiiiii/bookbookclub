@@ -24,9 +24,13 @@ public class BookService {
      * @return 등록된 책 정보
      */
     public BookResponse createBook(BookRequest request) {
+        String author = (request.getAuthors() != null && !request.getAuthors().isEmpty())
+                ? String.join(", ", request.getAuthors())
+                : "알 수 없음";
+
         Book book = Book.create(
                 request.getTitle(),
-                request.getAuthor(),
+                author,
                 request.getPublisher(),
                 request.getIsbn(),
                 request.getThumbnailUrl()

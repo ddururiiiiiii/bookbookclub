@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 책 등록 요청 DTO
  */
@@ -14,8 +16,7 @@ public class BookRequest {
     @NotBlank(message = "제목은 비어 있을 수 없습니다.")
     private String title;
 
-    @NotBlank(message = "저자는 비어 있을 수 없습니다.")
-    private String author;
+    private List<String> authors;
 
     private String publisher;
     private String isbn;

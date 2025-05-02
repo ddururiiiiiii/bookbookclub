@@ -4,6 +4,8 @@ import ddururi.bookbookclub.domain.book.dto.BookRequest;
 import ddururi.bookbookclub.domain.book.dto.BookResponse;
 import ddururi.bookbookclub.domain.book.service.BookService;
 import ddururi.bookbookclub.global.common.ApiResponse;
+import ddururi.bookbookclub.global.external.kakao.KakaoBookClient;
+import ddururi.bookbookclub.domain.book.dto.KakaoBookSearchResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,19 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
 
     private final BookService bookService;
+    private final KakaoBookClient kakaoBookClient;
+
+    /**
+     * 카카오 책 검색 API
+     * @param query 검색어
+     */
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<KakaoBookSearchResponse>> searchBooksFromKakao(
+            @RequestParam String query
+    ) {
+        KakaoBookSearchResponse response = kakaoBookClient.searchBooks(query);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
 
     /**
      * 책 등록 API
