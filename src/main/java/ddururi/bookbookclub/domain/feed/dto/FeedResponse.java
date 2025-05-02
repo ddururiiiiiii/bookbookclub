@@ -5,6 +5,10 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+/**
+ * 피드 응답 DTO
+ * - 좋아요 수, 책 정보 포함
+ */
 @Getter
 public class FeedResponse {
 
@@ -18,6 +22,9 @@ public class FeedResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
+    /**
+     * 피드 엔티티에서 응답 DTO로 변환
+     */
     public FeedResponse(Feed feed, long likeCount, boolean liked) {
         this.id = feed.getId();
         this.content = feed.getContent();

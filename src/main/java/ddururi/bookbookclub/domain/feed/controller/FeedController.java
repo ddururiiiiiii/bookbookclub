@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 피드 관련 API 컨트롤러
  * - 작성, 수정, 삭제, 단건 조회, 목록 조회
@@ -108,8 +110,13 @@ public class FeedController {
     @GetMapping("/popular/like")
     public ApiResponse<?> getPopularByLike(
             @RequestParam String period,
-            @RequestParam(defaultValue = "10") int topN) {
-        return ApiResponse.success(rankingFeedService.getTopLikedFeeds(period, topN));
+            @RequestParam(defaultValue = "10") int topN,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        List<FeedResponse> feedResponses = rankingFeedService.getTopLikedFeedDetails(
+                period, topN, userDetails.getUser().getId());
+
+        return ApiResponse.success(feedResponses);
     }
 
 }
