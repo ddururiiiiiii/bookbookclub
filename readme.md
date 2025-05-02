@@ -21,12 +21,12 @@
 <br>
 
 ## ✨ 관심사 및 목표
-- **JPA 성능 최적화**에 관심이 많습니다. N+1 문제, 지연/즉시 로딩, fetch join 등을 학습하고 프로젝트에 적용하고 있습니다.
-- **계층 분리 및 도메인 기반 구조**에 익숙해지고 있으며, 유지보수성과 확장성을 고려한 구조를 지향합니다.
-- **API 응답 표준화, 전역 예외 처리, 테스트 가능한 구조 설계**에 관심이 많습니다.
-- 실무에서는 경험하지 못한 기술들을 **사이드 프로젝트**를 통해 적극적으로 도입하고 있습니다.  
-  예: OAuth2, Redis, Kafka, Docker, CI/CD 등
-- 장기적으로는 사용자에게 가치 있는 서비스를 만드는 **문제 해결 중심의 백엔드 개발자**가 되고 싶습니다.
+- JPA 성능 최적화 (N+1 문제 해결, 지연/즉시 로딩, fetch join, QueryDSL 복잡 쿼리 최적화)
+- 계층 분리 및 도메인 기반 구조 → 유지보수성과 확장성을 고려한 설계
+- API 응답 표준화, 전역 예외 처리, 테스트 가능한 구조에 대한 고민과 적용
+- 사이드 프로젝트로 실무에서 경험하지 못한 기술 적극 도입 (예: OAuth2, Redis, Kafka, Docker, CI/CD)
+- 문제 해결 중심의 백엔드 개발자로 성장 → 사용자 중심의 서비스를 만드는 개발자 목표
+
 
 <br>
 
@@ -35,16 +35,21 @@
 <br>
 
 ## 💻✨ 주요 기능 구현 현황
-
-| 구분 | 구현 기능 |
-|------|----------|
-| **회원 가입 및 인증** | 이메일 인증 기반 회원가입<br>Redis와 DB 동시 저장<br>이메일 인증 상태 확인 및 가입 제한 |
-| **로그인 / 인증** | JWT 기반 로그인<br>Access/Refresh Token 관리 (Redis 활용) |
-| **소셜 로그인** | Google, Naver 연동<br>Provider별 서비스 분리<br>닉네임 중복 시 예외 처리 |
-| **회원 정보 관리** | 회원 조회 API (`/me`)<br>닉네임 중복 확인 API<br>프로필 이미지 업로드 및 저장 (로컬, 향후 S3 예정) |
-| **예외 처리 및 공통 응답 포맷** | `@RestControllerAdvice` 기반 글로벌 예외 처리<br>`ApiResponse<T>` 통일된 응답 포맷 적용 |
-| **보안** | URL 접근 제어 설정<br>비밀번호 암호화(BCrypt) |
-| **기타** | 이메일 인증 내역 테이블 관리<br>로그인 이력/재가입 제어 로직 구현 예정 |
+| 구분                   | 구현 기능                                                                       |
+| -------------------- | --------------------------------------------------------------------------- |
+| **회원 가입 및 인증**       | 이메일 인증 기반 회원가입<br>Redis와 DB 동시 저장<br>이메일 인증 상태 확인 및 가입 제한<br>6개월 이내 재가입 불가능 |
+| **로그인 / 인증**         | JWT 기반 로그인<br>Access/Refresh Token 관리 (Redis 활용)<br>AccessToken 블랙리스트 처리    |
+| **소셜 로그인**           | Google, Naver 연동<br>Provider별 서비스 분리<br>닉네임 중복 시 예외 처리                      |
+| **회원 정보 관리**         | 회원 조회 API (`/me`)<br>닉네임 중복 확인 API<br>프로필 이미지 업로드 및 저장 (로컬, 향후 S3 예정)       |
+| **예외 처리 및 공통 응답 포맷** | `@RestControllerAdvice` 기반 글로벌 예외 처리<br>`ApiResponse<T>` 통일된 응답 포맷 적용       |
+| **보안**               | URL 접근 제어 설정<br>비밀번호 암호화(BCrypt)                                            |
+| **책(Book)**          | Book 도메인 CRUD<br>Kakao Book API 연동<br>중복 등록 시 예외 처리                         |
+| **피드(Feed)**         | Feed 도메인 CRUD<br>좋아요 순 정렬 (주간/월간/연간/누적)<br>피드 검색<br>특정 회원의 피드·좋아요 목록 조회     |
+| **좋아요(Like)**        | Like 도메인 CRUD<br>좋아요 토글 기능<br>랭킹 조회 시 피드 상세 포함                              |
+| **댓글(Comment)**      | Comment 도메인 CRUD                                                            |
+| **팔로우(Follow)**      | Follow 도메인 CRUD                                                             |
+| **신고(Report)**       | 신고 도메인 구현<br>누적 시 피드 블라인드 처리                                                |
+| **기타**               | 이메일 인증 내역 테이블 관리<br>로그인 이력/재가입 제어 로직<br>Spring Scheduler 기반 탈퇴 처리           |
 
 
 <br>
@@ -58,8 +63,8 @@
 - Java 17
 - Spring Boot 3
 - Spring Security (JWT, OAuth2)
-- JPA (Hibernate), QueryDSL
-- Redis (Token 저장소 및 인증용도)
+- JPA (Hibernate), QueryDSL (복잡 쿼리 최적화)
+- Redis (Token 관리, 향후 캐싱 예정)
 - MySQL
 
 ### Frontend
@@ -68,8 +73,9 @@
 
 ### DevOps
 - Gradle
-- Git (Git Flow 예정)
+- Git (Git Flow 적용 중, PR 전략 실험 중)
 - Docker / Kubernetes (추후 도입 예정)
+- Kafka (추후 도입 예정)
 
 <br>
 
@@ -80,13 +86,20 @@
 ## 📁 프로젝트 구조
 ~~~
 src/main/java/ddururi/bookbookclub/
-├── domain/              # 도메인별 핵심 로직 (예: user, post 등 추가 예정)
+├── domain/
+│   ├── user/
+│   ├── book/
+│   ├── feed/
+│   ├── like/
+│   ├── comment/
+│   ├── follow/
+│   └── report/
 └── global/
-    ├── common/         # 공통 응답 포맷, 상수 등
-    ├── config/         # 전역 설정 클래스
-    ├── exception/      # 커스텀 예외, 예외 핸들러
-    ├── jwt/            # JWT 관련 유틸 및 필터
-    └── security/       # 스프링 시큐리티 설정 및 필터
+    ├── common/
+    ├── config/
+    ├── exception/
+    ├── jwt/
+    └── security/
 
 ~~~
 
@@ -122,7 +135,7 @@ src/main/java/ddururi/bookbookclub/
 - [#016 북(Book) 도메인 개발 및 단위 테스트](https://ddururiiiiiii.tistory.com/637)
 - [#017 북(Book) 도메인 API 구현 및 테스트](https://ddururiiiiiii.tistory.com/639)
 - [#029 책(Book) - Spring WebClient로 외부 API 연동: KakaoBookClient 구현](https://ddururiiiiiii.tistory.com/653)
-- [#032 책(Book) 중복 등록 시 예외 처리 하기](https://ddururiiiiiii.tistory.com/658)
+- [#033 책(Book) 중복 등록 시 예외 처리 하기](https://ddururiiiiiii.tistory.com/658)
 
 ### 피드(Feed)
 - [#018 피드(Feed) 도메인 개발 및 단위테스트](https://ddururiiiiiii.tistory.com/640)
@@ -144,3 +157,5 @@ src/main/java/ddururi/bookbookclub/
 - [#023 댓글(Comment) API 구현 및 테스트](https://ddururiiiiiii.tistory.com/645)
 - [#024 JWT 토큰이 없는데도 200 OK 가 뜬다? (해결방법)](https://ddururiiiiiii.tistory.com/646)
 
+### 팔로우(Follow)
+- [#034 팔로우(Follow) 도메인 구현 및 테스트](https://ddururiiiiiii.tistory.com/659)
