@@ -114,7 +114,7 @@ public class LikeService {
     @Transactional(readOnly = true)
     public List<UserSummaryResponse> getUsersWhoLikedFeed(Long feedId) {
         return likeRepository.findAllByFeedId(feedId).stream()
-                .map(like -> new UserSummaryResponse(like.getUser()))
+                .map(like -> UserSummaryResponse.from(like.getUser()))
                 .collect(Collectors.toList());
     }
 

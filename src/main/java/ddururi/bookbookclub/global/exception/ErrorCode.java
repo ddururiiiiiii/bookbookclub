@@ -27,7 +27,10 @@ public enum ErrorCode {
     COMMENT_ACCESS_DENIED("COMMENT_ACCESS_DENIED", "본인이 작성한 댓글만 삭제할 수 있습니다."),
     FEED_BLINDED("FEED_BLINDED", "블라인드 처리된 게시글입니다."),
     ALREADY_REPORTED("ALREADY_REPORTED", "이미 신고한 피드입니다."),
-    DUPLICATE_ISBN("DUPLICATE_ISBN", "이미 등록된 ISBN입니다.");
+    DUPLICATE_ISBN("DUPLICATE_ISBN", "이미 등록된 ISBN입니다."),
+    ALREADY_FOLLOWING("ALREADY_FOLLOWING", "이미 팔로우한 사용자입니다."),
+    FOLLOW_NOT_FOUND("FOLLOW_NOT_FOUND", "팔로우 관계를 찾을 수 없습니다."),
+    ACCESS_DENIED("ACCESS_DENIED", "본인 계정으로만 요청할 수 있습니다.");
 
     private final String code;
     private final String message;

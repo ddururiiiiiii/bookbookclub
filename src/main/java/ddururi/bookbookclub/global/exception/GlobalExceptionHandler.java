@@ -7,6 +7,9 @@ import ddururi.bookbookclub.domain.emailverification.exception.EmailNotVerifiedE
 import ddururi.bookbookclub.domain.emailverification.exception.EmailVerificationLimitExceededException;
 import ddururi.bookbookclub.domain.feed.exception.FeedBlindedException;
 import ddururi.bookbookclub.domain.feed.exception.FeedNotFoundException;
+import ddururi.bookbookclub.domain.follow.exception.AccessDeniedException;
+import ddururi.bookbookclub.domain.follow.exception.AlreadyFollowingException;
+import ddururi.bookbookclub.domain.follow.exception.FollowNotFoundException;
 import ddururi.bookbookclub.domain.like.exception.LikeException;
 import ddururi.bookbookclub.domain.report.exception.AlreadyReportedException;
 import ddururi.bookbookclub.domain.user.exception.*;
@@ -121,10 +124,27 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR));
     }
+    @ExceptionHandler(AlreadyFollowingException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAlreadyFollowing(AlreadyFollowingException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(FollowNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFollowNotFound(FollowNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
 
     @ExceptionHandler(DuplicateIsbnException.class)
     public ResponseEntity<ApiResponse<Void>> handleDuplicateIsbn(DuplicateIsbnException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAccessDenied(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(ApiResponse.fail(e.getErrorCode()));
     }
 
