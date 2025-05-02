@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * 좋아요(Like) 관련 데이터 액세스 레포지토리
  */
-public interface LikeRepository extends JpaRepository<Like, Long> {
+public interface LikeRepository extends JpaRepository<Like, Long>, LikeRepositoryCustom{
 
     boolean existsByUserIdAndFeedId(Long userId, Long feedId);
 
@@ -18,4 +18,5 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     long countByFeedId(Long feedId);
 
     List<Like> findAllByFeedId(Long feedId);
+
 }

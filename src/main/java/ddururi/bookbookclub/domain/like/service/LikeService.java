@@ -108,7 +108,6 @@ public class LikeService {
 
     /**
      * 특정 피드를 좋아요한 사용자 목록 조회
-     *
      * @param feedId 피드 ID
      * @return 해당 피드를 좋아요한 사용자들의 요약 정보 리스트
      */
@@ -117,5 +116,10 @@ public class LikeService {
         return likeRepository.findAllByFeedId(feedId).stream()
                 .map(like -> new UserSummaryResponse(like.getUser()))
                 .collect(Collectors.toList());
+    }
+
+
+    public List<Long> getLikedFeedIds(Long userId) {
+        return likeRepository.findFeedIdsByUserId(userId);
     }
 }

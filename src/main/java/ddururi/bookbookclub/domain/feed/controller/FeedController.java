@@ -119,4 +119,55 @@ public class FeedController {
         return ApiResponse.success(feedResponses);
     }
 
+    /**
+     * 피드 목록 조회 (검색 기능, 페이징, 좋아요 수, 좋아요 여부 포함)
+     * @param pageable 페이징 요청 정보
+     * @param userDetails 현재 로그인한 사용자 정보
+     * @return 피드 목록 (페이지 포함)
+     */
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<List<FeedResponse>>> searchFeeds(
+            @RequestParam String keyword,
+            Pageable pageable,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        List<FeedResponse> feeds = feedService.searchFeeds(keyword, pageable, userDetails.getUser().getId());
+        return ResponseEntity.ok(ApiResponse.success(feeds));
+    }
+
+    /**
+     * 특정 회원의 피드 목록 조회
+     * @param userId 특정 사용자 ID
+     * @param pageable 페이징 요청 정보
+     * @param userDetails 현재 로그인한 사용자 정보
+     * @return 특정 회원의 피드 목록
+     */
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<List<FeedResponse>>> getFeedsByUser(
+            @PathVariable Long userId,
+            Pageable pageable,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        List<FeedResponse> feeds = feedService.getFeedsByUser(userId, pageable, userDetails.getUser().getId());
+        return ResponseEntity.ok(ApiResponse.success(feeds));
+    }
+
+    /**
+     *  특정 회원이 좋아요 누른 피드 목록 조회
+     * @param userId 조회 하려는 사용자 ID
+     * @param pageable 페이징 요청 정보
+     * @param userDetails 현재 로그인한 사용자 정보
+     * @return 특정 회원이 좋아요 누른 피드 (페이지 형태)
+     */
+    @GetMapping("/user/{userId}/likes")
+    public ResponseEntity<ApiResponse<List<FeedResponse>>> getFeedsLikedByUser(
+            @PathVariable Long userId,
+            Pageable pageable,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        List<FeedResponse> feeds = feedService.getFeedsLikedByUser(userId, pageable, userDetails.getUser().getId());
+        return ResponseEntity.ok(ApiResponse.success(feeds));
+    }
+
+
 }

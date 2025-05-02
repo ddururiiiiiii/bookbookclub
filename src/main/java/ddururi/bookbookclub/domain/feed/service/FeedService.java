@@ -18,6 +18,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * 피드 관련 비즈니스 로직 처리
  */
@@ -140,4 +142,58 @@ public class FeedService {
             return new FeedResponse(feed, likeCount, liked);
         });
     }
+
+    /**
+     * 피드 목록 조회 (검색기능, 페이징, 좋아요 수, 좋아요 여부 포함)
+     * @param pageable 페이징 요청 정보
+     * @param userId 현재 사용자 ID
+     * @return 피드 목록 (페이지 형태)
+     */
+    public List<FeedResponse> searchFeeds(String keyword, Pageable pageable, Long userId) {
+        List<Feed> feeds = feedRepository.searchFeeds(keyword, pageable);
+        return feeds.stream()
+                .map(feed -> {
+                    long likeCount = likeService.getLikeCount(feed.getId());
+                    boolean liked = likeService.hasUserLiked(userId, feed.getId());
+                    return new FeedResponse(feed, likeCount, liked);
+                })
+                .toList();
+    }
+
+    /**
+     * 특정 회원의 피드 목록 조회
+     * @param userId 조회 하려는 사용자 ID
+     * @param pageable 페이징 요청 정보
+     * @param viewerId 현재 사용자 ID
+     * @return 특정 회원의 피드 목록 (페이지 형태)
+     */
+    public List<FeedResponse> getFeedsByUser(Long userId, Pageable pageable, Long viewerId) {
+        List<Feed> feeds = feedRepository.findFeedsByUserId(userId, pageable);
+        return feeds.stream()
+                .map(feed -> {
+                    long likeCount = likeService.getLikeCount(feed.getId());
+                    boolean liked = likeService.hasUserLiked(viewerId, feed.getId());
+                    return new FeedResponse(feed, likeCount, liked);
+                }).toList();
+    }
+
+    /**
+     * 특정 회원이 좋아요 누른 피드 목록 조회
+     * @param userId 조회 하려는 사용자 ID
+     * @param pageable 페이징 요청 정보
+     * @param viewerId 현재 사용자 ID
+     * @return 특정 회원이 좋아요 누른 피드 (페이지 형태)
+     */
+    public List<FeedResponse> getFeedsLikedByUser(Long userId, Pageable pageable, Long viewerId) {
+        List<Long> feedIds = likeService.getLikedFeedIds(userId);
+        List<Feed> feeds = feedRepository.findByIdInAndIsBlindedFalse(feedIds);
+
+        return feeds.stream()
+                .map(feed -> {
+                    long likeCount = likeService.getLikeCount(feed.getId());
+                    boolean liked = likeService.hasUserLiked(viewerId, feed.getId());
+                    return new FeedResponse(feed, likeCount, liked);
+                }).toList();
+    }
+
 }

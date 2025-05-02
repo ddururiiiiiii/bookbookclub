@@ -1,5 +1,6 @@
 package ddururi.bookbookclub.global.exception;
 
+import ddururi.bookbookclub.domain.book.exception.DuplicateIsbnException;
 import ddururi.bookbookclub.domain.comment.exception.CommentAccessDeniedException;
 import ddururi.bookbookclub.domain.comment.exception.CommentNotFoundException;
 import ddururi.bookbookclub.domain.emailverification.exception.EmailNotVerifiedException;
@@ -119,6 +120,12 @@ public class GlobalExceptionHandler {
         ex.printStackTrace(); // 운영환경에서는 로거로 변경
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
+
+    @ExceptionHandler(DuplicateIsbnException.class)
+    public ResponseEntity<ApiResponse<Void>> handleDuplicateIsbn(DuplicateIsbnException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.fail(e.getErrorCode()));
     }
 
 }

@@ -5,6 +5,10 @@ import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * QueryDSL 설정 클래스
+ * - JPAQueryFactory 빈 등록
+ */
 @Configuration
 public class QueryDslConfig {
 
@@ -16,6 +20,7 @@ public class QueryDslConfig {
 
     @Bean
     public JPAQueryFactory jpaQueryFactory() {
+        // QueryDSL의 JPAQueryFactory 빈 등록 → 레포지토리에서 주입받아 사용
         return new JPAQueryFactory(entityManager);
     }
 }
