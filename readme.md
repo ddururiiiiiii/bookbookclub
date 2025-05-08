@@ -100,14 +100,7 @@ src/main/java/ddururi/bookbookclub/
 ## 🔗 MSA 전환 프로젝트
 📢 이 프로젝트는 초기 모놀리식 구조로 시작했으며, MSA 아키텍처로 리팩토링한 프로젝트는 아래에서 확인할 수 있습니다.
 
-- (진행중) BookBookClub-MSA (메인 소개용): [🔗 링크]
-- (진행중) bbc-user-service (회원 가입, 로그인, OAuth, 프로필 관리) [🔗 링크]
-- (예정) bbc-post-service (게시글 작성, 수정, 삭제, 검색, 피드 관리) [🔗 링크]
-- (예정) bbc-book-service (좋아요 등록/취소, 좋아요 수 계산) [🔗 링크]
-- (예정) bbc-notification-service(외부 도서 API 연동, 도서 검색, 도서 메타데이터 저장) [🔗 링크]
-- (예정) bbc-gateway-service(알림 생성, 알림 전송 (ex: Kafka로 비동기 처리)) [🔗 링크]
-- (예정) bbc-auth-service (API Gateway, 인증 필터, 라우팅 관리) [🔗 링크]
-
+- (진행중) BookBookClub-MSA (메인 소개용): [🔗 링크](https://github.com/ddururiiiiiii/BookBookClub-MSA)
 <br>
 
 ----
@@ -115,7 +108,8 @@ src/main/java/ddururi/bookbookclub/
 <br>
 
 ## 📕 개발일지
-** 링크를 클릭하면 개발일지를 작성한 블로그로 이동 됩니다.
+- ** 링크를 클릭하면 개발일지를 작성한 블로그로 이동 됩니다.
+- ** 모놀리식 아키텍처일 때, 개발했던 내용만 작성되어 있고 그 이후의 개발일지는 MSA readme에서 확인하실 수 있습니다. 
 
 ### 회원 (로그인/회원가입/로그아웃)
 - [#000 프로젝트 생성 (프로젝트 생성, MySQL 연결, 개발 편의 설정, 패키지 설정 등)](https://ddururiiiiiii.tistory.com/598)
