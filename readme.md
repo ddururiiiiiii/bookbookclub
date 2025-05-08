@@ -1,7 +1,8 @@
 
-# 📚 BookBookClub
-**BookBookClub**은 책에 대한 생각과 감상을 자유롭게 공유할 수 있는 SNS 플랫폼입니다.  
-간단한 UI와 외부 도서 API 연동을 통해 독서 경험을 나누고, 커뮤니티를 형성할 수 있습니다.
+# 📚 BookBookClub (Monolith Version)
+- **BookBookClub**은 책에 대한 생각과 감상을 자유롭게 공유할 수 있는 SNS 플랫폼입니다.  
+- 간단한 UI와 외부 도서 API 연동을 통해 독서 경험을 나누고, 커뮤니티를 형성할 수 있습니다.
+- 이 프로젝트는 초기 모놀리식 아키텍처 기반으로 설계되었으며, 추후 MSA 아키텍처로 발전시켰습니다.
 
 
 
@@ -12,7 +13,7 @@
 <br>
 
 ## 📆 개발 기간 
-- 2025.04.16 ~ ing.
+- 2025.04.16 ~ 2025.05.02
 
 <br>
 
@@ -27,29 +28,21 @@
 - 사이드 프로젝트로 실무에서 경험하지 못한 기술 적극 도입 (예: OAuth2, Redis, Kafka, Docker, CI/CD)
 - 문제 해결 중심의 백엔드 개발자로 성장 → 사용자 중심의 서비스를 만드는 개발자 목표
 
-
 <br>
 
 ----
 
 <br>
 
-## 💻✨ 주요 기능 구현 현황
-| 구분                   | 구현 기능                                                                       |
-| -------------------- | --------------------------------------------------------------------------- |
-| **회원 가입 및 인증**       | 이메일 인증 기반 회원가입<br>Redis와 DB 동시 저장<br>이메일 인증 상태 확인 및 가입 제한<br>6개월 이내 재가입 불가능 |
-| **로그인 / 인증**         | JWT 기반 로그인<br>Access/Refresh Token 관리 (Redis 활용)<br>AccessToken 블랙리스트 처리    |
-| **소셜 로그인**           | Google, Naver 연동<br>Provider별 서비스 분리<br>닉네임 중복 시 예외 처리                      |
-| **회원 정보 관리**         | 회원 조회 API (`/me`)<br>닉네임 중복 확인 API<br>프로필 이미지 업로드 및 저장 (로컬, 향후 S3 예정)       |
-| **예외 처리 및 공통 응답 포맷** | `@RestControllerAdvice` 기반 글로벌 예외 처리<br>`ApiResponse<T>` 통일된 응답 포맷 적용       |
-| **보안**               | URL 접근 제어 설정<br>비밀번호 암호화(BCrypt)                                            |
-| **책(Book)**          | Book 도메인 CRUD<br>Kakao Book API 연동<br>중복 등록 시 예외 처리                         |
-| **피드(Feed)**         | Feed 도메인 CRUD<br>좋아요 순 정렬 (주간/월간/연간/누적)<br>피드 검색<br>특정 회원의 피드·좋아요 목록 조회     |
-| **좋아요(Like)**        | Like 도메인 CRUD<br>좋아요 토글 기능<br>랭킹 조회 시 피드 상세 포함                              |
-| **댓글(Comment)**      | Comment 도메인 CRUD                                                            |
-| **팔로우(Follow)**      | Follow 도메인 CRUD                                                             |
-| **신고(Report)**       | 신고 도메인 구현<br>누적 시 피드 블라인드 처리                                                |
-| **기타**               | 이메일 인증 내역 테이블 관리<br>로그인 이력/재가입 제어 로직<br>Spring Scheduler 기반 탈퇴 처리           |
+## 🚀 프로젝트 개요
+- **기술 스택**:
+    - Back-End: Java, Spring Boot, JPA, MySQL
+    - Infra: Docker, Redis
+    - 인증: JWT, OAuth2 (Google, Naver)
+    - 기타: QueryDSL, TDD, Lombok
+- **아키텍처**: 모놀리식 (단일 애플리케이션)
+
+
 
 
 <br>
@@ -58,30 +51,24 @@
 
 <br>
 
-## 🔧 사용 기술
-## Backend
-- Java 17
-- Spring Boot 3
-- Spring Security (JWT, OAuth2)
-- JPA (Hibernate), QueryDSL (복잡 쿼리 최적화)
-- Redis (Token 관리, 향후 캐싱 예정)
-- MySQL
+## ✨ 주요 기능
 
-### Frontend
-- Thymeleaf (기초 UI 구성)
-- JavaScript (ES6)
-
-### DevOps
-- Gradle
-- Git (Git Flow 적용 중, PR 전략 실험 중)
-- Docker / Kubernetes (추후 도입 예정)
-- Kafka (추후 도입 예정)
+- 회원가입 / 로그인 (소셜 로그인 포함)
+- 이메일 인증 (Redis + MySQL)
+- 피드 CRUD (책 감상/생각 공유)
+- 좋아요 기능
+- 통합 검색 (책 제목, 작가 등)
+- API 응답 표준화 / 글로벌 예외 처리
 
 <br>
 
 ----
 
 <br>
+
+
+<br>
+
 
 ## 📁 프로젝트 구조
 ~~~
@@ -103,6 +90,23 @@ src/main/java/ddururi/bookbookclub/
 
 ~~~
 
+
+<br>
+
+----
+
+<br>
+
+## 🔗 MSA 전환 프로젝트
+📢 이 프로젝트는 초기 모놀리식 구조로 시작했으며, MSA 아키텍처로 리팩토링한 프로젝트는 아래에서 확인할 수 있습니다.
+
+- (진행중) BookBookClub-MSA (메인 소개용): [🔗 링크]
+- (진행중) bbc-user-service (회원 가입, 로그인, OAuth, 프로필 관리) [🔗 링크]
+- (예정) bbc-post-service (게시글 작성, 수정, 삭제, 검색, 피드 관리) [🔗 링크]
+- (예정) bbc-book-service (좋아요 등록/취소, 좋아요 수 계산) [🔗 링크]
+- (예정) bbc-notification-service(외부 도서 API 연동, 도서 검색, 도서 메타데이터 저장) [🔗 링크]
+- (예정) bbc-gateway-service(알림 생성, 알림 전송 (ex: Kafka로 비동기 처리)) [🔗 링크]
+- (예정) bbc-auth-service (API Gateway, 인증 필터, 라우팅 관리) [🔗 링크]
 
 <br>
 
