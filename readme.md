@@ -109,7 +109,7 @@ src/main/java/ddururi/bookbookclub/
 
 ## 📕 개발일지
 - ** 링크를 클릭하면 개발일지를 작성한 블로그로 이동 됩니다.
-- ** 모놀리식 아키텍처일 때, 개발했던 내용만 작성되어 있고 그 이후의 개발일지는 MSA readme에서 확인하실 수 있습니다. 
+- ** 모놀리식 아키텍처일 때, 개발했던 내용만 작성되어 있고 그 이후의 개발일지는 [MSA readme](https://github.com/ddururiiiiiii/BookBookClub-MSA/blob/main/README.md)에서 확인하실 수 있습니다. 
 
 ### 회원 (로그인/회원가입/로그아웃)
 - [#000 프로젝트 생성 (프로젝트 생성, MySQL 연결, 개발 편의 설정, 패키지 설정 등)](https://ddururiiiiiii.tistory.com/598)
