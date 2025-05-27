@@ -159,3 +159,4 @@ src/main/java/ddururi/bookbookclub/
 - [#034 팔로우(Follow) 도메인 구현 및 테스트](https://ddururiiiiiii.tistory.com/659)
 
 - 깃 브랜치 테스트 중1
+- 깃 브랜치 테스트 중2
